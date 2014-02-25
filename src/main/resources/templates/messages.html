@@ -1,0 +1,18 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="messages" id="serverMessages">
+
+    <div class="alert alert-danger" th:if="${loginError}">Wrong user or password</div>
+
+    <div class="alert alert-success" th:if="${loggedOut}">You have successfully logged out</div>
+
+</div>
+
+</body>
+
+</html>

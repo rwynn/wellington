@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <custom-converters>
+            <converter type="org.github.rwynn.wellington.convert.AuthorityToString">
+                <class-a>org.github.rwynn.wellington.persistence.Authority</class-a>
+                <class-b>java.lang.String</class-b>
+            </converter>
+            <converter type="org.github.rwynn.wellington.convert.PageConverter">
+                <class-a>org.springframework.data.domain.Page</class-a>
+                <class-b>org.github.rwynn.wellington.rest.RESTPage</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+
+    <mapping>
+        <class-a>org.github.rwynn.wellington.persistence.User</class-a>
+        <class-b>org.github.rwynn.wellington.transfer.UserDTO</class-b>
+        <field>
+            <a>authoritySet</a>
+            <b>authorities</b>
+        </field>
+        <field>
+            <a>key</a>
+            <b>password</b>
+        </field>
+    </mapping>
+
+</mappings>

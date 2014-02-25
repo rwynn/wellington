@@ -1,0 +1,25 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+
+<div layout:fragment="content" id="content">
+
+    <h1 th:text="${status}">500</h1>
+
+    <div class="lead">
+        <p id='created' th:text="${timestamp}">123</p>
+
+        <p>Application Version:
+            <span id='version' th:text="${@appProps.version}"></span>
+        </p>
+
+        <p>Correlation ID:
+            <span id='correlationId' th:text="${correlationId}"></span>
+        </p>
+
+        <p th:text="${message}">java.lang.NullPointerException</p>
+    </div>
+</div>
+
+</html>

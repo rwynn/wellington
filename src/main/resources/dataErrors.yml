@@ -1,0 +1,7 @@
+unmapped:
+    code: UNKNOWN
+    message: A Data Error Occurred
+requests:
+        POST:
+            "/users/register":
+                "23505": User already exists

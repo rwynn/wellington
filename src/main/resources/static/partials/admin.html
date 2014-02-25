@@ -1,0 +1,162 @@
+<div class="row">
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li ng-class="{active: view == 'users'}"><a href="#/admin/users">Users</a></li>
+            <li ng-class="{active: view == 'metrics'}"><a href="#/admin/metrics">Metrics</a></li>
+            <li ng-class="{active: view == 'env'}"><a href="#/admin/env">Environment</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+
+        <div ng-include="'/partials/messages.html'"></div>
+
+        <div ng-if="view == 'env'" class="show-hide">
+
+            <div name-value-table="true" title="Java Properties" pairs="env.javaProps" />
+
+            <div name-value-table="true" title="Application Properties" pairs="env.appProps" />
+
+            <div ordered-table="true" title="Class path" elements="env.classpath" />
+
+        </div>
+
+        <div ng-if="view == 'metrics'" class="show-hide">
+
+            <h3>Memory</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td>Free Memory</td>
+                    <td>Total Memory</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{metrics['mem.free']}}</td>
+                    <td>{{metrics['mem']}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="progress">
+                <div class="progress-bar progress-bar-warning" ng-style="memUsed()">
+                    <span class="sr-only">Used Memory</span>
+                </div>
+                <div class="progress-bar progress-bar-success" ng-style="memFree()">
+                    <span class="sr-only">Free Memory</span>
+                </div>
+            </div>
+
+            <h3>Request Counts</h3>
+            <div class="metrics-view">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <td>Resource</td>
+                        <td>Response Code</td>
+                        <td>Request Count</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="m in metrics.counter | orderBy:'value':'reverse'">
+                        <td>{{m.name | resource}}</td>
+                        <td>{{m.name | responseCode}}</td>
+                        <td>{{m.value}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            <h3>Response Times</h3>
+            <div class="metrics-view">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>Resource</td>
+                            <td>Response Time (ms)</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="m in metrics.response | orderBy:'value':'reverse'">
+                            <td>{{m.name | resource}}</td>
+                            <td>{{m.value}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div ng-if="view == 'users'" class="show-hide">
+
+            <h3>System Users</h3>
+            <div filter="true" value="filter" placeholder="Filter by user name" />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Username</td>
+                        <td>Authorities</td>
+                        <td>Locked</td>
+                        <td>Edit</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="u in users.content">
+                        <td>{{u.username}}</td>
+                        <td ng-init="u.selectAuth = u.authorities[0]">
+                            <select ng-model="u.selectAuth" ng-options="auth for auth in u.authorities"></select>
+                        </td>
+                        <td>
+                            <span ng-if="u.locked">YES</span>
+                            <span ng-if="!u.locked">NO</span>
+                        </td>
+                        <td>
+                            <button ng-click="edit(u)" class="btn">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <div pager="true" state="users" no-results="No users found" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div ng-if="selected" class="show-hide">
+
+                <h3>Edit user {{ selected.username }}</h3>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <button ng-click="toggleLock()" ng-if="isSelectedLocked()" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-remove"></i>
+                                Remove Lock on {{ selected.username }}
+                        </button>
+                        <button ng-click="toggleLock()" ng-disabled="isSelf()" ng-if="!isSelectedLocked()" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                Lock {{ selected.username }}
+                        </button>
+
+                        <button ng-click="toggleAdmin()" ng-if="!isSelectedAdmin()" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            Add Admin Authority
+                        </button>
+
+                        <button ng-click="cancelEdit()" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-remove"></i>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

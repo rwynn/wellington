@@ -1,0 +1,17 @@
+<h3>{{ title }}</h3>
+<div class="metrics-view">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Name</td>
+            <td>Value</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in pairs | orderBy:'name'">
+            <td>{{ p.name }}</td>
+            <td>{{ p.value }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

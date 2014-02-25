@@ -1,0 +1,25 @@
+#!/bin/bash
+
+sudo service postgresql start
+
+sudo -u postgres psql postgres -c "ALTER USER postgres WITH PASSWORD 'connect';"
+
+sudo -u postgres createdb -O postgres spring
+
+sudo service postgresql restart
+
+sudo ln -s /etc/activemq/instances-available/main /etc/activemq/instances-enabled/main
+
+sudo /apache-activemq-5.9.0/bin/activemq start
+
+chmod 0755 /app/gradlew
+
+cd /app
+
+# run liquibase to update DB
+sudo ./gradlew update
+
+# run spring boot app
+sudo ./gradlew bootRun
+
+/bin/bash

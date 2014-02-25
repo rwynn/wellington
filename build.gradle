@@ -1,0 +1,179 @@
+def jooqPackage = "org/github/rwynn/wellington/persistence/jooq"
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "http://repo.spring.io/milestone" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC1")
+        classpath('com.augusttechgroup:gradle-liquibase-plugin:0.7') {
+
+        }
+        classpath("postgresql:postgresql:9.1-901.jdbc4")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'liquibase'
+apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'jdepend'
+apply plugin: 'pmd'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.9'
+}
+
+jar {
+    baseName = 'wellington'
+    version =  '0.1.0'
+}
+
+configurations {
+    jooq {
+        extendsFrom compile
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-milestone" }
+    maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+}
+
+dependencies {
+    compile('org.apache.tomcat:tomcat-jdbc:7.0.42')
+    compile('net.sf.ehcache:ehcache-core:2.4.6')
+    compile("org.springframework:spring-core:4.0.1.RELEASE")
+    compile("org.springframework:spring-jms:4.0.1.RELEASE")
+    compile("org.springframework:spring-context-support:4.0.1.RELEASE")
+    compile("org.springframework:spring-orm:4.0.1.RELEASE")
+    compile("org.springframework:spring-web:4.0.1.RELEASE")
+    compile("org.springframework:spring-webmvc:4.0.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-web:1.0.0.RC3")
+    compile("org.springframework.boot:spring-boot-starter-actuator:1.0.0.RC3")
+    compile("org.springframework.data:spring-data-jpa:1.4.1.RELEASE")
+    compile("org.hibernate:hibernate-entitymanager:4.3.1.Final")
+    compile("org.hibernate:hibernate-core:4.3.1.Final")
+    compile("org.hibernate:hibernate-validator:4.3.1.Final")
+    compile("org.aspectj:aspectjweaver:1.7.4")
+    compile("org.jasypt:jasypt:1.9.1")
+    compile("postgresql:postgresql:9.1-901.jdbc4")
+    compile("org.yaml:snakeyaml:1.13")
+    compile("org.apache.activemq:activemq-client:5.9.0")
+    compile("org.springframework.security:spring-security-web:3.2.0.RELEASE")
+    compile("org.springframework.security:spring-security-config:3.2.0.RELEASE")
+
+    compile("com.ibm.icu:icu4j:3.4.4")
+    compile('net.sf.dozer:dozer:5.4.0')  {
+        exclude group: 'org.slf4j'
+    }
+    testCompile("junit:junit:4.11")
+    testCompile('org.mockito:mockito-all:1.9.5')
+
+    compile("org.jooq:jooq:3.2.2")
+    jooq("org.jooq:jooq-meta:3.2.2")
+    jooq("org.jooq:jooq-codegen:3.2.2")
+    jooq(files("config/jooq"))
+
+    compile("org.thymeleaf:thymeleaf-spring4:2.1.2.RELEASE")
+    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.2.2")
+    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.1.RELEASE")
+
+    compile 'org.webjars:jquery:2.1.0-2'
+    compile 'org.webjars:bootstrap:3.1.0'
+    compile 'org.webjars:angularjs:1.2.13'
+}
+
+liquibase {
+
+    changelogs {
+        main {
+            file = file('config/liquibase/changelog.xml')
+        }
+    }
+    databases {
+        sandbox {
+            Properties databaseProps = new Properties()
+            databaseProps.load(new FileInputStream(file('src/main/resources/application.properties')))
+            url = databaseProps['org.github.rwynn.wellington.database.url']
+            username = databaseProps['org.github.rwynn.wellington.database.username']
+            password = databaseProps['org.github.rwynn.wellington.database.password']
+        }
+    }
+    defaultDatabase = databases.sandbox
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
+}
+
+pmdMain {
+    excludes = ["${jooqPackage}/**/*.java"]
+}
+
+checkstyleMain {
+    excludes = ["${jooqPackage}/**/*.java"]
+}
+
+findbugsMain {
+    excludes = ["${jooqPackage}/**/*.java"]
+    excludeFilter = file("$rootProject.projectDir/config/findbugs/excludeFilter.xml")
+    reportLevel "high"
+}
+
+[findbugsMain, findbugsTest]*.reports {
+    xml.enabled false
+    html.enabled true
+}
+
+test.finalizedBy jacocoTestReport
+test.finalizedBy check
+
+task jooqClean(type: Delete) {
+    delete file('src/main/java/${jooqPackage}')
+}
+
+task jooqGen(type: JavaExec) {
+    main = 'org.jooq.util.GenerationTool'
+    classpath configurations.jooq
+    args "/jooq-config.xml"
+}
+
+jooqGen.dependsOn jooqClean
+update.finalizedBy jooqGen
+
+task npm(type: Exec) {
+    group = "Build"
+    description = "Installs all Node.js dependencies defined in package.json"
+    commandLine = ["npm", "install"]
+    inputs.file "package.json"
+    outputs.dir "node_modules"
+}
+
+task webdriverUpdate(type: Exec) {
+    group = "Build"
+    description = "Updates web driver"
+    commandLine = ["$rootProject.projectDir/node_modules/protractor/bin/webdriver-manager", "update"]
+}
+
+task protractorRun(type: Exec) {
+    group = "Build"
+    description = "Updates web driver"
+    commandLine = ["$rootProject.projectDir/node_modules/protractor/bin/protractor",
+            "$rootProject.projectDir/src/test/javascript/protractor-conf.js"]
+}
+
+protractorRun.dependsOn {
+    [dropAll, update, webdriverUpdate]
+}

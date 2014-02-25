@@ -1,0 +1,28 @@
+<div class="row">
+
+    <div class="col-md-8 col-md-offset-2">
+
+        <div ng-include="'/partials/messages.html'"></div>
+        <div class="jumbotron">
+            <form name="registrationForm" role="form">
+                <div class="form-group has-feedback" ng-class="{ 'has-error': registrationForm.regUsername.$invalid, 'has-success': registrationForm.regUsername.$valid }">
+                    <label for="regUsername">Username</label>
+                    <input focus-me="true" ng-keypress="checkDone($event)" ng-model="username" required="true" type="email" class="form-control" name="regUsername" id="regUsername" placeholder="Enter email">
+                    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback" ng-class="{ 'has-error': registrationForm.regPassword.$invalid, 'has-success': registrationForm.regPassword.$valid }">
+                    <label for="regPassword">Password</label>
+                    <input ng-keypress="checkDone($event)" ng-model="password" required="true" type="password" class="form-control" name="regPassword" id="regPassword" placeholder="Enter password">
+                    <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+                </div>
+                <button type="button" ng-disabled="registrationForm.$invalid" ng-click="register()" class="btn btn-success">Submit</button>
+                <button type="button" ng-click="cancel()" class="btn btn-default">Cancel</button>
+                <p></p>
+                <div class="alert alert-danger" ng-show="registrationForm.regUsername.$error.email">Please enter a valid email address</div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+

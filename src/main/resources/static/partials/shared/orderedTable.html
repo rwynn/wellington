@@ -1,0 +1,17 @@
+<h3>{{ title }}</h3>
+<div class="metrics-view">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Position</td>
+            <td>Element</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="e in elements">
+            <td>{{ $index + 1 }}</td>
+            <td>{{e}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

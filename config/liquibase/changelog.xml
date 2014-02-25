@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet author="rwynn" id="0">
+        <tagDatabase tag="version_alpha"/>
+    </changeSet>
+
+    <changeSet author="rwynn" id="1">
+        <sql>
+            CREATE TABLE users
+            (
+            username character varying(80),
+            key character varying(200) NOT NULL,
+            locked boolean DEFAULT false,
+            id serial NOT NULL,
+            CONSTRAINT users_username_key UNIQUE (username)
+            )
+            WITH (
+            OIDS=FALSE
+            );
+            ALTER TABLE users
+            OWNER TO postgres;
+        </sql>
+        <rollback>
+            DROP TABLE users;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="rwynn" id="2">
+        <sql>
+            CREATE INDEX username_idx
+            ON users
+            USING btree
+            (username COLLATE pg_catalog."default");
+        </sql>
+        <rollback>
+            DROP INDEX username_idx;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="rwynn" id="3">
+        <sql>
+            CREATE UNIQUE INDEX username_idx_lower
+            ON users
+            USING btree
+            (lower(username::text) COLLATE pg_catalog."default");
+        </sql>
+        <rollback>
+            DROP INDEX username_idx_lower;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="rwynn" id="4">
+        <sql>
+            CREATE TABLE authorities
+            (
+            username character varying(80) NOT NULL,
+            authority character varying(80) NOT NULL,
+            CONSTRAINT fk_authorities_users FOREIGN KEY (username)
+            REFERENCES users (username) MATCH SIMPLE
+            ON UPDATE NO ACTION ON DELETE NO ACTION
+            )
+            WITH (
+            OIDS=FALSE
+            );
+            ALTER TABLE authorities
+            OWNER TO postgres;
+        </sql>
+        <rollback>
+            DROP TABLE authorities;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="rwynn" id="5">
+        <sql>
+            CREATE UNIQUE INDEX ix_auth_username
+            ON authorities
+            USING btree
+            (username COLLATE pg_catalog."default", authority COLLATE pg_catalog."default");
+        </sql>
+        <rollback>
+            DROP INDEX ix_auth_username;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="rwynn" id="6">
+        <sql>
+            INSERT INTO users (username, key, locked) values ('admin', 'ckEp6WxJCG179tWVbQG7gL8gJ5YKzdrCHlgRTX/QvuYWfbr1BpKxlZKlyM3qFMiR', false);
+        </sql>
+        <rollback>
+            DELETE from users where username = 'admin';
+        </rollback>
+    </changeSet>
+
+    <changeSet author="rwynn" id="7">
+        <sql>
+            INSERT INTO authorities (username, authority) values ('admin', 'ROLE_USER');
+            INSERT INTO authorities (username, authority) values ('admin', 'ROLE_ADMIN');
+        </sql>
+        <rollback>
+            DELETE from authorities where username = 'admin';
+        </rollback>
+    </changeSet>
+
+    <changeSet author="rwynn" id="8">
+        <tagDatabase tag="version_1.0"/>
+    </changeSet>
+
+    <changeSet author="rwynn" id="9">
+        <sql>
+            alter table authorities add column createdby varchar(80);
+            alter table authorities add column createddate timestamp;
+            alter table authorities add column lastmodifiedby varchar(80);
+            alter table authorities add column lastmodifieddate timestamp;
+        </sql>
+        <rollback>
+            alter table authorities drop column createdby;
+            alter table authorities drop column createddate;
+            alter table authorities drop column lastmodifiedby;
+            alter table authorities drop column lastmodifieddate;
+        </rollback>
+    </changeSet>
+
+    <changeSet author="rwynn" id="10">
+        <sql>
+            alter table users add column version bigint;
+        </sql>
+        <rollback>
+            alter table users drop column version;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

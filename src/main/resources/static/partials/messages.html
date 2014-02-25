@@ -1,0 +1,19 @@
+<div ng-controller="Messages">
+
+    <div class="alert alert-success" ng-if="success.length > 0">
+
+        <p ng-repeat="s in success">
+            {{s}}
+        </p>
+
+    </div>
+
+    <div class="alert alert-danger" ng-if="errors.length > 0">
+
+        <p ng-repeat="error in errors">
+            {{error}}
+        </p>
+
+    </div>
+
+</div>

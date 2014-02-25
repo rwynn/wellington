@@ -1,0 +1,13 @@
+<ul class="pagination" ng-if="state.totalPages > 1">
+    <li><a title="Previous Page" ng-if="state.hasPreviousPage" ng-click="prevPage()">&laquo;</a></li>
+    <li ng-repeat="p in pagesAvail()" ng-class="{active: p == state.pageNumber}">
+        <a title="Page {{p + 1}}" ng-click="setPage(p)">{{p + 1}}</a>
+    </li>
+    <li><a title="Next Page" ng-if="state.hasNextPage" ng-click="nextPage()">&raquo;</a></li>
+</ul>
+<span ng-if="state.totalPages > 0" class="pagination-showing pull-right">
+    Showing page {{state.pageNumber + 1}} of {{state.totalPages}}
+</span>
+<span ng-if="state.totalPages == 0" class="pagination-no-results">
+    {{noResults}}
+</span>

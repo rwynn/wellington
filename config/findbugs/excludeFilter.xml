@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <Match>
+        <Class name="org.github.rwynn.wellington.persistence.jooq.*" />
+    </Match>
+    <Match>
+        <Bug code="EI,EI2" />
+    </Match>
+</FindBugsFilter>

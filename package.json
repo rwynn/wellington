@@ -1,0 +1,13 @@
+{
+  "name": "wellington",
+  "description": "A starter project for Spring Boot",
+  "repository": "https://github.com/rwynn/wellington",
+  "devDependencies": {
+    "phantomjs" : "~1.9",
+    "karma" : "~0.10",
+    "karma-junit-reporter" : "~0.1",
+    "karma-jasmine" : "~0.1",
+    "protractor" : "~0.19.0",
+    "jasmine-reporters": "~0.2.1"
+  }
+}

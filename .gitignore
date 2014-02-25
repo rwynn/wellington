@@ -1,0 +1,8 @@
+wellington.iml
+node_modules
+build
+out
+.gradle
+.idea
+.eclipse
+

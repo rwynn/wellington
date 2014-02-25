@@ -1,0 +1,36 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+
+<body>
+
+    <form th:if="${#authorization.expression('hasRole(''ROLE_ANONYMOUS'')')}" th:fragment="form" class="navbar-form navbar-right" role="form"
+            th:action="@{/login}" method="POST">
+
+            <div class="form-group">
+                <input id="username" name="username" type="text" placeholder="Username" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input id="password" name="password" type="password" placeholder="Password" class="form-control"/>
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+            <a href="#/register" class="btn btn-primary">Register</a>
+    </form>
+
+    <ul class="nav navbar-nav navbar-right" th:unless="${#authorization.expression('hasRole(''ROLE_ANONYMOUS'')')}" th:fragment="welcome">
+        <li>
+            <a href="#">
+                 Welcome, <span th:text="${#authentication.name}">Username</span>
+            </a>
+        </li>
+        <li><a href="/logout" th:href="@{/logout}">Log out</a></li>
+    </ul>
+
+    <div layout:fragment="content">
+    </div>
+
+</body>
+
+</html>
