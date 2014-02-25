@@ -24,20 +24,20 @@ git clone this project and get right down to implementing features.
     - gradle wrapper for auto installation
     - dependency management
     - automated tests
-        - gradlew test
+        - ./gradlew test
             - executes unit tests
             - generates code coverage report
             - checks code style
             - checks code quality
     - automated code coverage
-        - gradlew jacocoTestReport
+        - ./gradlew jacocoTestReport
     - Liquibase database refactoring
-        - gradlew update
+        - ./gradlew update
         - Incremental database design
         - Rollback
     - functional tests
-        - gradlew npm (installs node dependencies)
-        - gradlew protractorRun (runs functional tests)
+        - ./gradlew npm (installs node dependencies)
+        - ./gradlew protractorRun (runs functional tests)
             - tests defined in src/test/javascript/e2e/scenarios.js
             - leverages protractor support for AngularJS
 
@@ -52,7 +52,7 @@ git clone this project and get right down to implementing features.
 
 - JOOQ type safe query generation
     - gradle task to generate DSL classes from the database
-        - gradlew jooqGen
+        - ./gradlew jooqGen
     - used in conjunction with spring jdbc template to leverage spring transaction support
     - helper classes to support pagination of results
 
@@ -142,15 +142,15 @@ Start ActiveMQ (from activeMQ HOME)
 
 Create database tables via Liquibase (from project dir)
 
-    gradlew update
+    ./gradlew update
 
 Run all tests and generate test reports
 
-    gradlew test
+    ./gradlew test
 
 Run the Web App on port 8080 (from project dir)
 
-    gradlew bootRun
+    ./gradlew bootRun
 
 #### Verify the Application ####
 
@@ -166,15 +166,15 @@ By default the chrome web browser is used.  Update protractor-conf.js to change 
 
 Install node dependencies (do once and then anytime package.json is updated)
 
-    gradlew npm
+    ./gradlew npm
 
 Start the app if not already started
 
-    gradlew bootRun
+    ./gradlew bootRun
 
 Run protractor
 
-    gradlew protractorRun
+    ./gradlew protractorRun
 
 Check output
 
