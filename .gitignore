@@ -10,3 +10,4 @@ out
 .project
 .classpath
 src/main/java/org/github/rwynn/wellington/persistence/jooq
+

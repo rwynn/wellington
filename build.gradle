@@ -149,9 +149,6 @@ findbugsMain {
     html.enabled true
 }
 
-test.finalizedBy jacocoTestReport
-test.finalizedBy check
-
 task jooqClean(type: Delete) {
     delete file('src/main/java/${jooqPackage}')
 }
@@ -161,9 +158,6 @@ task jooqGen(type: JavaExec) {
     classpath configurations.jooq
     args "/jooq-config.xml"
 }
-
-jooqGen.dependsOn jooqClean
-update.finalizedBy jooqGen
 
 task npm(type: Exec) {
     group = "Build"
@@ -217,4 +211,10 @@ minifyJs {
     }
 }
 
+test.finalizedBy jacocoTestReport
+test.finalizedBy check
+
+jooqGen.dependsOn jooqClean
+update.finalizedBy jooqGen
+compileJava.dependsOn jooqGen
 build.finalizedBy minifyJs
