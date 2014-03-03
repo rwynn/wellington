@@ -11,9 +11,8 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC1")
-        classpath('com.augusttechgroup:gradle-liquibase-plugin:0.7') {
-        classpath 'com.eriwen:gradle-js-plugin:1.9.0'
-        }
+        classpath('com.augusttechgroup:gradle-liquibase-plugin:0.7')
+        classpath('com.eriwen:gradle-js-plugin:1.9.0')
         classpath("postgresql:postgresql:9.1-901.jdbc4")
     }
 }
