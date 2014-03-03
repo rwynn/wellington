@@ -40,8 +40,8 @@ git clone this project and get right down to implementing features.
         - ./gradlew protractorRun (runs functional tests)
             - tests defined in src/test/javascript/e2e/scenarios.js
             - leverages protractor support for AngularJS
-    - javascript best practices
-        - linting
+    - javascript best practices built in
+        - [jshint](http://jshint.com/)
         - combination
         - minification
         - source map

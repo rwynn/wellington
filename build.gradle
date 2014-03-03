@@ -211,10 +211,18 @@ minifyJs {
     }
 }
 
+task jsHint(type:com.eriwen.gradle.js.tasks.JsHintTask) {
+    source = javascript.source.dev.js.files
+    dest = file("${buildDir}/reports/jshint/jshint.xml")
+    ignoreExitCode = true
+    reporter = 'checkstyle'
+}
+
 test.finalizedBy jacocoTestReport
 test.finalizedBy check
+test.finalizedBy jsHint
 
 jooqGen.dependsOn jooqClean
 update.finalizedBy jooqGen
 compileJava.dependsOn jooqGen
-build.finalizedBy minifyJs
+processResources.finalizedBy minifyJs

@@ -1,3 +1,5 @@
+/*global angular, $*/
+/*jshint undef: true, unused: true*/
 'use strict';
 
 // Declare app level module which depends on filters, and services

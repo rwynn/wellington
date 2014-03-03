@@ -1,3 +1,5 @@
+/*global angular, $*/
+/*jshint undef: true, unused: true*/
 'use strict';
 
 /* Controllers */
@@ -51,22 +53,23 @@ controllers.controller('Admin', ['$scope', '$routeParams', '$location', 'UsersSe
     }
 
     $scope.loadView = function() {
+        var promise;
         if ($scope.view == "users") {
-            var promise = UsersService.load($scope.page, $scope.size, $scope.filter);
+            promise = UsersService.load($scope.page, $scope.size, $scope.filter);
             promise.then(function(result) {
                 if (result) {
                     $scope.users = result.results;
                 }
             });
         } else if ($scope.view == "metrics") {
-            var promise = MetricsService.load();
+            promise = MetricsService.load();
             promise.then(function(result) {
                 if (result) {
                     $scope.metrics = result;
                 }
             });
         } else if ($scope.view == "env") {
-            var promise = EnvService.load();
+            promise = EnvService.load();
             promise.then(function(result) {
                 if (result) {
                     $scope.env = result;
