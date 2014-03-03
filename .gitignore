@@ -1,8 +1,12 @@
 wellington.iml
+wellington.ipr
+wellington.iws
 node_modules
 build
 out
 .gradle
 .idea
 .eclipse
+.project
+.classpath
 

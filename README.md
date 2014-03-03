@@ -40,6 +40,11 @@ git clone this project and get right down to implementing features.
         - ./gradlew protractorRun (runs functional tests)
             - tests defined in src/test/javascript/e2e/scenarios.js
             - leverages protractor support for AngularJS
+    - javascript best practices
+        - linting
+        - combination
+        - minification
+        - source map
 
 - Java Based Spring Configuration via annotations
 
@@ -179,6 +184,25 @@ Run protractor
 Check output
 
     build/test-results/TEST-Wellington.xml
+
+
+#### Setting up an IDE for development ####
+
+Eclipse
+
+    ./gradlew eclipse
+
+IntelliJ IDEA
+
+    ./gradlew idea
+
+#### Production Mode ####
+
+Flip a switch in application.properties in order to run in production mode
+
+    info.app.development=false
+
+This switches to using the minified version of the application javascript.
 
 #### License ####
 Wellington is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).

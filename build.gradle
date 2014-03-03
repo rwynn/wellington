@@ -1,4 +1,7 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 def jooqPackage = "org/github/rwynn/wellington/persistence/jooq"
+def jsSrcDir = "$rootProject.projectDir/src/main/resources/static/js"
 
 buildscript {
     repositories {
@@ -9,7 +12,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC1")
         classpath('com.augusttechgroup:gradle-liquibase-plugin:0.7') {
-
+        classpath 'com.eriwen:gradle-js-plugin:1.9.0'
         }
         classpath("postgresql:postgresql:9.1-901.jdbc4")
     }
@@ -25,6 +28,16 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'jdepend'
 apply plugin: 'pmd'
+apply plugin: 'js'
+
+javascript.source {
+    dev {
+        js {
+            srcDir jsSrcDir
+            include "app.js", "services.js", "controllers.js", "filters.js", "directives.js"
+        }
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.9'
@@ -156,7 +169,11 @@ update.finalizedBy jooqGen
 task npm(type: Exec) {
     group = "Build"
     description = "Installs all Node.js dependencies defined in package.json"
-    commandLine = ["npm", "install"]
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd','/c', 'npm', 'install'
+    } else {
+        commandLine = ["npm", "install"]
+    }
     inputs.file "package.json"
     outputs.dir "node_modules"
 }
@@ -164,16 +181,41 @@ task npm(type: Exec) {
 task webdriverUpdate(type: Exec) {
     group = "Build"
     description = "Updates web driver"
-    commandLine = ["$rootProject.projectDir/node_modules/protractor/bin/webdriver-manager", "update"]
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd','/c', "node", "$rootProject.projectDir/node_modules/protractor/bin/webdriver-manager", "update"
+    } else {
+        commandLine = ["$rootProject.projectDir/node_modules/protractor/bin/webdriver-manager", "update"]
+    }
 }
 
 task protractorRun(type: Exec) {
     group = "Build"
-    description = "Updates web driver"
-    commandLine = ["$rootProject.projectDir/node_modules/protractor/bin/protractor",
-            "$rootProject.projectDir/src/test/javascript/protractor-conf.js"]
+    description = "Runs end to end tests"
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd','/c', "node", "$rootProject.projectDir/node_modules/protractor/bin/protractor",
+                "$rootProject.projectDir/src/test/javascript/protractor-conf.js"
+    } else {
+        commandLine = ["$rootProject.projectDir/node_modules/protractor/bin/protractor",
+                "$rootProject.projectDir/src/test/javascript/protractor-conf.js"]
+    }
 }
 
 protractorRun.dependsOn {
     [dropAll, update, webdriverUpdate]
 }
+
+combineJs {
+    source = javascript.source.dev.js.files
+    dest = file("${buildDir}/resources/main/static/js/all.js")
+}
+
+minifyJs {
+    source = combineJs
+    dest = file("${buildDir}/resources/main/static/js/all-min.js")
+    sourceMap = file("${buildDir}/resources/main/static/js/all.sourcemap.json")
+    closure {
+        warningLevel = 'QUIET'
+    }
+}
+
+build.finalizedBy minifyJs
