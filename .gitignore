@@ -9,5 +9,4 @@ out
 .eclipse
 .project
 .classpath
-src/main/java/org/github/rwynn/wellington/persistence/jooq/*
-
+src/main/java/org/github/rwynn/wellington/persistence/jooq
