@@ -65,8 +65,7 @@ public class UserController extends RESTErrorHandler {
 
     @RequestMapping(value = "/admin/list", method = RequestMethod.GET)
     public RESTResult<RESTPage<UserDTO>> list(@PageableDefault(size = 1, sort = "username") Pageable pageable,
-                                              @RequestParam(value = "filter", required = false) String filter) {
-        FilterDTO filterDTO = new FilterDTO(filter);
+                                              FilterDTO filterDTO) {
         return new RESTResult<RESTPage<UserDTO>>(userService.getUsers(filterDTO, pageable));
     }
 
