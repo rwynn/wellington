@@ -1,5 +1,5 @@
 /*global angular, $*/
-/*jshint undef: true, unused: true*/
+/*jshint undef: true, unused: true, globalstrict:true*/
 'use strict';
 
 /* Services */
@@ -12,11 +12,11 @@ services.factory('RegisterService', ['$http', '$q', 'MessageService', function($
         var deferred = $q.defer();
         var payload = { username: username, password: password };
         $http.post('/users/register', payload).
-        success(function(data, status, headers, config){
+        success(function(data){
             MessageService.parseResponse(data);
             deferred.resolve(data.success);
         }).
-        error(function(data, status, headers, config){
+        error(function(data){
             MessageService.parseResponse(data);
             deferred.resolve(false);
         });
@@ -36,7 +36,7 @@ services.factory('AuthService', ['$http', '$q', 'MessageService', function($http
            deferred.resolve(self.authorities);
         } else {
             $http.get('/users/auth').
-            success(function(data, status, headers, config){
+            success(function(data){
                 if (data.success) {
                     self.authorities = data.results.authorities;
                     self.username = data.results.username;
@@ -44,7 +44,7 @@ services.factory('AuthService', ['$http', '$q', 'MessageService', function($http
                 MessageService.parseResponse(data);
                 deferred.resolve(self.authorities);
             }).
-            error(function(data, status, headers, config){
+            error(function(data){
                 MessageService.parseResponse(data);
                 deferred.resolve(null);
             });
@@ -82,12 +82,12 @@ services.factory('EnvService', ['$http', '$q', 'MessageService', function($http,
             deferred.resolve(self.result);
         } else {
             $http.get("/env").
-            success(function(data, status, headers, config){
+            success(function(data){
+                var key;
                 var result = { classpath: [], appProps: [], javaProps: [] };
                 var classpath = data.systemProperties['java.class.path'];
-                for (var key in data) {
-                    if (data.hasOwnProperty(key)
-                        && key.indexOf("applicationConfig") == 0) {
+                for (key in data) {
+                    if (data.hasOwnProperty(key) && key.indexOf("applicationConfig") === 0) {
                         var nextConfig = data[key];
                         for (var key2 in nextConfig) {
                             if (nextConfig.hasOwnProperty(key2)) {
@@ -96,9 +96,9 @@ services.factory('EnvService', ['$http', '$q', 'MessageService', function($http,
                         }
                     }
                 }
-                for (var key in data.systemProperties) {
+                for (key in data.systemProperties) {
                     if (key == "java.class.path") continue;
-                    if (key.indexOf("java.") == 0 && data.systemProperties.hasOwnProperty(key)) {
+                    if (key.indexOf("java.") === 0 && data.systemProperties.hasOwnProperty(key)) {
                         result.javaProps.push({name: key, value: data.systemProperties[key] });
                     }
                 }
@@ -106,7 +106,7 @@ services.factory('EnvService', ['$http', '$q', 'MessageService', function($http,
                 self.result = result;
                 deferred.resolve(result);
             }).
-            error(function(data, status, headers, config){
+            error(function(){
                 MessageService.addError("Unable to retrieve environment information");
                 deferred.resolve(null);
             });
@@ -121,13 +121,13 @@ services.factory('MetricsService', ['$http', '$q', 'MessageService', function($h
     self.load = function() {
         var deferred = $q.defer();
         $http.get("/metrics").
-        success(function(data, status, headers, config){
+        success(function(data){
             var metrics = { response: [], counter: [] };
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
-                    if (key.indexOf("gauge.response") == 0) {
+                    if (key.indexOf("gauge.response") === 0) {
                         metrics.response.push({name: key, value: data[key] });
-                    } else if (key.indexOf("counter") == 0) {
+                    } else if (key.indexOf("counter") === 0) {
                         metrics.counter.push({name: key, value: data[key] });
                     } else {
                         metrics[key] = data[key];
@@ -136,7 +136,7 @@ services.factory('MetricsService', ['$http', '$q', 'MessageService', function($h
             }
             deferred.resolve(metrics);
         }).
-        error(function(data, status, headers, config){
+        error(function(){
             MessageService.addError("Unable to retrieve metrics");
             deferred.resolve(null);
         });
@@ -162,11 +162,11 @@ services.factory('UsersService', ['$http', '$q', 'MessageService', function($htt
         path = path + '?' + $.param(args);
         var deferred = $q.defer();
         $http.get(path).
-        success(function(data, status, headers, config){
+        success(function(data){
             MessageService.parseResponse(data);
             deferred.resolve(data);
         }).
-        error(function(data, status, headers, config){
+        error(function(data){
             MessageService.parseResponse(data);
             deferred.resolve(null);
         });
@@ -176,11 +176,11 @@ services.factory('UsersService', ['$http', '$q', 'MessageService', function($htt
         var payload = { username: username, authorities: authorities};
         var deferred = $q.defer();
         $http.post('/users/admin/roles', payload).
-        success(function(data, status, headers, config){
+        success(function(data){
          MessageService.parseResponse(data);
          deferred.resolve(data.success);
         }).
-        error(function(data, status, headers, config){
+        error(function(data){
          MessageService.parseResponse(data);
          deferred.resolve(false);
         });
@@ -190,11 +190,11 @@ services.factory('UsersService', ['$http', '$q', 'MessageService', function($htt
         var payload = { username: username, locked: locked};
         var deferred = $q.defer();
         $http.post('/users/admin/lock', payload).
-        success(function(data, status, headers, config){
+        success(function(data){
             MessageService.parseResponse(data);
             deferred.resolve(data.success);
         }).
-        error(function(data, status, headers, config){
+        error(function(data){
             MessageService.parseResponse(data);
             deferred.resolve(false);
         });
@@ -219,14 +219,14 @@ services.factory('MessageService', [function() {
     };
     self.parseResponse = function(resp) {
         self.clear();
-        if (resp.success == false) {
+        if (resp.success === false) {
             if (resp.validationErrors) {
-                angular.forEach(resp.validationErrors, function(value, key) {
+                angular.forEach(resp.validationErrors, function(value) {
                    self.errors.push(value.defaultMessage);
                 });
             }
             if (resp.dataErrors) {
-                angular.forEach(resp.dataErrors, function(value, key) {
+                angular.forEach(resp.dataErrors, function(value) {
                     self.errors.push(value.defaultMessage);
                 });
             }

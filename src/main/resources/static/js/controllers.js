@@ -1,5 +1,5 @@
 /*global angular, $*/
-/*jshint undef: true, unused: true*/
+/*jshint undef: true, unused: true, globalstrict:true*/
 'use strict';
 
 /* Controllers */
@@ -41,7 +41,7 @@ controllers.controller('Admin', ['$scope', '$routeParams', '$location', 'UsersSe
     function($scope, $routeParams, $location, UsersService, MetricsService, EnvService, MessageService, IsAdmin, AuthService) {
 
     $scope.view = $routeParams.view;
-    $scope.page = parseInt($routeParams.page) || 0;
+    $scope.page = parseInt($routeParams.page, 10) || 0;
     $scope.filter = $routeParams.filter;
 
     $scope.size = 5;
@@ -80,7 +80,7 @@ controllers.controller('Admin', ['$scope', '$routeParams', '$location', 'UsersSe
 
     $scope.edit = function(user) {
         $scope.selected = user;
-    }
+    };
 
     $scope.$on('pageChanged', function(event, page) {
         // when the pager updates the page then update route
@@ -145,14 +145,14 @@ controllers.controller('Admin', ['$scope', '$routeParams', '$location', 'UsersSe
 
     $scope.memFree = function() {
         if ($scope.metrics) {
-            return { "width": ($scope.metrics['mem.free'] / $scope.metrics['mem'])*100 + "%" };
+            return { "width": ($scope.metrics['mem.free'] / $scope.metrics.mem)*100 + "%" };
         }
         return {"width": "0%"};
     };
 
     $scope.memUsed = function() {
         if ($scope.metrics) {
-            return { "width": (1 - ($scope.metrics['mem.free'] / $scope.metrics['mem']))*100 + "%" };
+            return { "width": (1 - ($scope.metrics['mem.free'] / $scope.metrics.mem))*100 + "%" };
         }
         return {"width": "0%"};
     };

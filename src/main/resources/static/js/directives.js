@@ -1,5 +1,5 @@
 /*global angular, $*/
-/*jshint undef: true, unused: true*/
+/*jshint undef: true, unused: true, globalstrict:true*/
 'use strict';
 
 /* Directives */
@@ -14,7 +14,7 @@ directives.directive('nameValueTable', function () {
         pairs: '=',
         title: '@'
       }
-    }
+    };
 });
 
 directives.directive('orderedTable', function () {
@@ -25,12 +25,12 @@ directives.directive('orderedTable', function () {
         elements: '=',
         title: '@'
       }
-    }
+    };
 });
 
 directives.directive('focusMe', function() {
   return {
-    link: function($scope, element, attrs) {
+    link: function($scope, element) {
       $(element).focus();
     }
   };
@@ -44,7 +44,7 @@ directives.directive('filter', function () {
         'placeholder': '@',
         'filter': '=value'
       },
-      link: function($scope, element, attrs) {
+      link: function($scope) {
         $scope.checkKey = function(e) {
             if (e.keyCode == 13) {
                 $scope.$emit('filterChanged', $scope.filter);
@@ -55,7 +55,7 @@ directives.directive('filter', function () {
             $scope.$emit('filterChanged', $scope.filter);
         };
       }
-    }
+    };
 });
 
 directives.directive('pager', function () {
@@ -66,28 +66,28 @@ directives.directive('pager', function () {
         state: '=',
         noResults: '@'
       },
-      link: function($scope, element, attrs) {
+      link: function($scope) {
         $scope.pagesAvail = function() {
-            var avail = [];
+            var i, min, max, avail = [];
             if (!$scope.state) {
                 return avail;
             }
             if ($scope.state.hasPreviousPage) {
-                var min = -1;
+                min = -1;
                 if (min < ($scope.state.pageNumber - 5)) {
                    min = $scope.state.pageNumber - 5;
                 }
-                for (var i=$scope.state.pageNumber-1; i>min; --i) {
+                for (i=$scope.state.pageNumber-1; i>min; --i) {
                     avail.unshift(i);
                 }
             }
             avail.push($scope.state.pageNumber);
             if ($scope.state.hasNextPage) {
-                var max = $scope.state.totalPages;
+                max = $scope.state.totalPages;
                 if (max > ($scope.state.pageNumber + 5)) {
                    max = $scope.state.pageNumber + 5;
                 }
-                for (var i=$scope.state.pageNumber+1; i<max; ++i) {
+                for (i=$scope.state.pageNumber+1; i<max; ++i) {
                     avail.push(i);
                 }
             }
@@ -103,5 +103,5 @@ directives.directive('pager', function () {
             $scope.$emit('pageChanged', $scope.state.pageNumber + 1);
         };
       }
-    }
+    };
 });

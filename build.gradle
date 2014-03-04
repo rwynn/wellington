@@ -150,10 +150,12 @@ findbugsMain {
 }
 
 task jooqClean(type: Delete) {
-    delete file('src/main/java/${jooqPackage}')
+    delete file("src/main/java/${jooqPackage}")
 }
 
 task jooqGen(type: JavaExec) {
+    inputs.file file("$rootProject.projectDir/config/jooq/jooq-config.xml")
+    outputs.dir file("src/main/java/${jooqPackage}")
     main = 'org.jooq.util.GenerationTool'
     classpath configurations.jooq
     args "/jooq-config.xml"
@@ -214,7 +216,7 @@ minifyJs {
 task jsHint(type:com.eriwen.gradle.js.tasks.JsHintTask) {
     source = javascript.source.dev.js.files
     dest = file("${buildDir}/reports/jshint/jshint.xml")
-    ignoreExitCode = true
+    ignoreExitCode = false
     reporter = 'checkstyle'
 }
 
@@ -222,7 +224,6 @@ test.finalizedBy jacocoTestReport
 test.finalizedBy check
 test.finalizedBy jsHint
 
-jooqGen.dependsOn jooqClean
 update.finalizedBy jooqGen
 compileJava.dependsOn jooqGen
 processResources.finalizedBy minifyJs

@@ -1,5 +1,5 @@
 /*global angular, $*/
-/*jshint undef: true, unused: true*/
+/*jshint undef: true, unused: true, globalstrict:true*/
 'use strict';
 
 // Declare app level module which depends on filters, and services
@@ -23,7 +23,7 @@ run(['$rootScope', '$location', function($rootScope, $location) {
     $rootScope.$on("$routeChangeSuccess", function () {
         $('.navItem').removeClass("active").each(function() {
            var prefix = $("a", this).attr('href').substring(1);
-           if ($location.path().indexOf(prefix) == 0) {
+           if ($location.path().indexOf(prefix) === 0) {
                 $(this).addClass("active");
            }
         });
