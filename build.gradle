@@ -2,6 +2,8 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 def jooqPackage = "org/github/rwynn/wellington/persistence/jooq"
 def jsSrcDir = "$rootProject.projectDir/src/main/resources/static/js"
+def jsSrcFiles = ["${jsSrcDir}/app.js", "${jsSrcDir}/services.js",
+        "${jsSrcDir}/controllers.js", "${jsSrcDir}/filters.js", "${jsSrcDir}/directives.js"]
 
 buildscript {
     repositories {
@@ -28,15 +30,6 @@ apply plugin: 'findbugs'
 apply plugin: 'jdepend'
 apply plugin: 'pmd'
 apply plugin: 'js'
-
-javascript.source {
-    dev {
-        js {
-            srcDir jsSrcDir
-            include "app.js", "services.js", "controllers.js", "filters.js", "directives.js"
-        }
-    }
-}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.9'
@@ -200,7 +193,7 @@ protractorRun.dependsOn {
 }
 
 combineJs {
-    source = javascript.source.dev.js.files
+    source = jsSrcFiles
     dest = file("${buildDir}/resources/main/static/js/all.js")
 }
 
@@ -214,7 +207,7 @@ minifyJs {
 }
 
 task jsHint(type:com.eriwen.gradle.js.tasks.JsHintTask) {
-    source = javascript.source.dev.js.files
+    source = jsSrcFiles
     dest = file("${buildDir}/reports/jshint/jshint.xml")
     ignoreExitCode = false
     reporter = 'checkstyle'
