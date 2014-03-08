@@ -16,8 +16,8 @@ chmod 0755 /app/gradlew
 
 cd /app
 
-# run liquibase to update DB
-sudo ./gradlew update
+# run flyway to update DB
+sudo ./gradlew flywayMigrate
 
 # run spring boot app
 sudo ./gradlew bootRun

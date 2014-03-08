@@ -21,9 +21,11 @@ RUN wget -q http://apache.mesi.com.ar/activemq/apache-activemq/5.9.0/apache-acti
 RUN tar -xf apache-activemq-5.9.0-bin.tar.gz
 
 ADD config /app/config
+ADD migration /app/migration
 ADD src /app/src
 ADD gradle /app/gradle
 ADD gradlew /app/gradlew
+ADD settings.gradle /app/settings.gradle
 ADD build.gradle /app/build.gradle
 
 RUN chmod 0755 /app/config/docker/start.sh
