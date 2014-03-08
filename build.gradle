@@ -13,7 +13,6 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RC1")
-        classpath('com.augusttechgroup:gradle-liquibase-plugin:0.7')
         classpath('com.eriwen:gradle-js-plugin:1.9.0')
         classpath("postgresql:postgresql:9.1-901.jdbc4")
     }
@@ -23,7 +22,6 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'liquibase'
 apply plugin: 'jacoco'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
@@ -96,25 +94,6 @@ dependencies {
     compile 'org.webjars:angularjs:1.2.13'
 }
 
-liquibase {
-
-    changelogs {
-        main {
-            file = file('config/liquibase/changelog.xml')
-        }
-    }
-    databases {
-        sandbox {
-            Properties databaseProps = new Properties()
-            databaseProps.load(new FileInputStream(file('src/main/resources/application.properties')))
-            url = databaseProps['org.github.rwynn.wellington.database.url']
-            username = databaseProps['org.github.rwynn.wellington.database.username']
-            password = databaseProps['org.github.rwynn.wellington.database.password']
-        }
-    }
-    defaultDatabase = databases.sandbox
-}
-
 jacocoTestReport {
     reports {
         xml.enabled false
@@ -140,18 +119,6 @@ findbugsMain {
 [findbugsMain, findbugsTest]*.reports {
     xml.enabled false
     html.enabled true
-}
-
-task jooqClean(type: Delete) {
-    delete file("src/main/java/${jooqPackage}")
-}
-
-task jooqGen(type: JavaExec) {
-    inputs.file file("$rootProject.projectDir/config/jooq/jooq-config.xml")
-    outputs.dir file("src/main/java/${jooqPackage}")
-    main = 'org.jooq.util.GenerationTool'
-    classpath configurations.jooq
-    args "/jooq-config.xml"
 }
 
 task npm(type: Exec) {
@@ -188,8 +155,16 @@ task protractorRun(type: Exec) {
     }
 }
 
-protractorRun.dependsOn {
-    [dropAll, update, webdriverUpdate]
+task jooqClean(type: Delete) {
+    delete file("$rootProject.projectDir/src/main/java/${jooqPackage}")
+}
+
+task jooqGen(type: JavaExec) {
+    inputs.file file("$rootProject.projectDir/config/jooq/jooq-config.xml")
+    outputs.dir file("$rootProject.projectDir/src/main/java/${jooqPackage}")
+    main = 'org.jooq.util.GenerationTool'
+    classpath configurations.jooq
+    args "/jooq-config.xml"
 }
 
 combineJs {
@@ -213,10 +188,12 @@ task jsHint(type:com.eriwen.gradle.js.tasks.JsHintTask) {
     reporter = 'checkstyle'
 }
 
+evaluationDependsOn(":migration")
 test.finalizedBy jacocoTestReport
 test.finalizedBy check
 test.finalizedBy jsHint
-
-update.finalizedBy jooqGen
 compileJava.dependsOn jooqGen
 processResources.finalizedBy minifyJs
+clean.dependsOn jooqClean
+protractorRun.dependsOn project(':migration').cleanAndMigrate
+protractorRun.dependsOn webdriverUpdate

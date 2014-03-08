@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.googlecode.flyway:flyway-gradle-plugin:2.3")
+        classpath("postgresql:postgresql:9.1-901.jdbc4")
+    }
+}
+
+apply plugin: 'flyway'
+
+flyway {
+    Properties databaseProps = new Properties()
+    databaseProps.load(new FileInputStream(file("$rootProject.projectDir/src/main/resources/application.properties")))
+    driver = databaseProps['org.github.rwynn.wellington.database.driverClassName']
+    url = databaseProps['org.github.rwynn.wellington.database.url']
+    user = databaseProps['org.github.rwynn.wellington.database.username']
+    password = databaseProps['org.github.rwynn.wellington.database.password']
+    schemas = [databaseProps['org.github.rwynn.wellington.database.schema']]
+    locations = ["filesystem:${projectDir}/db/migration"]
+}
+
+task cleanAndMigrate(dependsOn: [flywayClean, flywayMigrate]) << {
+    println 'Database migration complete'
+}
+

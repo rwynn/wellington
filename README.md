@@ -31,11 +31,10 @@ git clone this project and get right down to implementing features.
             - checks code quality
     - automated code coverage
         - ./gradlew jacocoTestReport
-    - Liquibase database refactoring
-        - ./gradlew update
+    - [flyway](http://flywaydb.org/) database migrations
+        - ./gradlew flywayMigrate
         - Incremental database design
-        - Rollback
-    - functional tests
+    - [protractor](https://github.com/angular/protractor) functional tests
         - ./gradlew npm (installs node dependencies)
         - ./gradlew protractorRun (runs functional tests)
             - tests defined in src/test/javascript/e2e/scenarios.js
@@ -145,9 +144,9 @@ Start ActiveMQ (from activeMQ HOME)
 
     bin/activemq start
 
-Create database tables via Liquibase (from project dir)
+Create database tables via flyway (from project dir)
 
-    ./gradlew update
+    ./gradlew flywayMigrate
 
 Run all tests and generate test reports
 
