@@ -228,6 +228,10 @@ Flip a switch in application.properties in order to run in production mode
 
 This switches to using the minified version of the application javascript.
 
+#### More customization options ####
+
+See [How Do I Do That With Spring Boot?](https://github.com/spring-projects/spring-boot/blob/master/docs/howto.md)
+
 #### License ####
 Wellington is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
 
