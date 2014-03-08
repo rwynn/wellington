@@ -55,14 +55,14 @@ repositories {
 dependencies {
     compile('org.apache.tomcat:tomcat-jdbc:7.0.42')
     compile('net.sf.ehcache:ehcache-core:2.4.6')
-    compile("org.springframework:spring-core:4.0.1.RELEASE")
-    compile("org.springframework:spring-jms:4.0.1.RELEASE")
-    compile("org.springframework:spring-context-support:4.0.1.RELEASE")
-    compile("org.springframework:spring-orm:4.0.1.RELEASE")
-    compile("org.springframework:spring-web:4.0.1.RELEASE")
-    compile("org.springframework:spring-webmvc:4.0.1.RELEASE")
-    compile("org.springframework.boot:spring-boot-starter-web:1.0.0.RC3")
-    compile("org.springframework.boot:spring-boot-starter-actuator:1.0.0.RC3")
+    compile("org.springframework:spring-core:4.0.2.RELEASE")
+    compile("org.springframework:spring-jms:4.0.2.RELEASE")
+    compile("org.springframework:spring-context-support:4.0.2.RELEASE")
+    compile("org.springframework:spring-orm:4.0.2.RELEASE")
+    compile("org.springframework:spring-web:4.0.2.RELEASE")
+    compile("org.springframework:spring-webmvc:4.0.2.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-web:1.0.0.RC4")
+    compile("org.springframework.boot:spring-boot-starter-actuator:1.0.0.RC4")
     compile("org.springframework.data:spring-data-jpa:1.4.1.RELEASE")
     compile("org.hibernate:hibernate-entitymanager:4.3.1.Final")
     compile("org.hibernate:hibernate-core:4.3.1.Final")
@@ -72,8 +72,8 @@ dependencies {
     compile("postgresql:postgresql:9.1-901.jdbc4")
     compile("org.yaml:snakeyaml:1.13")
     compile("org.apache.activemq:activemq-client:5.9.0")
-    compile("org.springframework.security:spring-security-web:3.2.0.RELEASE")
-    compile("org.springframework.security:spring-security-config:3.2.0.RELEASE")
+    compile("org.springframework.security:spring-security-web:3.2.1.RELEASE")
+    compile("org.springframework.security:spring-security-config:3.2.1.RELEASE")
 
     compile("com.ibm.icu:icu4j:3.4.4")
     compile('net.sf.dozer:dozer:5.4.0')  {
@@ -92,7 +92,7 @@ dependencies {
     compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.1.RELEASE")
 
     compile 'org.webjars:jquery:2.1.0-2'
-    compile 'org.webjars:bootstrap:3.1.0'
+    compile 'org.webjars:bootstrap:3.1.1'
     compile 'org.webjars:angularjs:1.2.13'
 }
 

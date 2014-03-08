@@ -16,8 +16,8 @@ public class ErrorController extends BasicErrorController {
     protected final Log logger = LogFactory.getLog(getClass());
 
     @Override
-    public Map<String, Object> extract(RequestAttributes attributes, boolean trace) {
-        Map<String, Object> map = super.extract(attributes, true);
+    public Map<String, Object> extract(RequestAttributes attributes, boolean trace, boolean log) {
+        Map<String, Object> map = super.extract(attributes, true, false);
         String correlationId = UUID.randomUUID().toString();
         map.put("correlationId", correlationId);
         logError(map);
