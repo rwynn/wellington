@@ -139,7 +139,7 @@ Prerequisites
 - [Java 7](http://www.oracle.com/technetwork/java/javase/overview/index.html)
 - [Apache ActiveMQ](http://activemq.apache.org/)
 - [Postgresql](http://www.postgresql.org/) Database (empty database named 'spring')
-- [nodejs] (http://nodejs.org/) only required for running functional tests
+- [nodejs] (http://nodejs.org/)
 
 Start ActiveMQ (from activeMQ HOME)
 
@@ -195,6 +195,30 @@ Eclipse
 IntelliJ IDEA
 
     ./gradlew idea
+
+#### Running inside a servlet 3 web container ####
+
+Add the war plugin to build.gradle
+
+    apply plugin 'war'
+
+Change the build target from jar to war in build.gradle
+
+    jar {
+        baseName = 'wellington'
+        version =  '0.1.0'
+    }
+
+    becomes
+
+    war {
+        baseName = 'wellington'
+        version =  '0.1.0'
+    }
+
+You can now build a war file to deploy to your container
+
+    ./gradlew clean war
 
 #### Production Mode ####
 
