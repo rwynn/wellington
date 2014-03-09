@@ -14,7 +14,7 @@ RUN cd /tmp ; echo -en '#!/bin/bash\nexit 0\n' > DEBIAN/postinst
 RUN cd /tmp ; dpkg-deb -b . /fuse.deb
 RUN cd /tmp ; dpkg -i /fuse.deb
 
-RUN apt-get install -y wget postgresql openjdk-7-jdk
+RUN apt-get install -y wget postgresql openjdk-7-jdk nodejs
 
 RUN wget -q http://apache.mesi.com.ar/activemq/apache-activemq/5.9.0/apache-activemq-5.9.0-bin.tar.gz
 
