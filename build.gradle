@@ -51,6 +51,7 @@ repositories {
 }
 
 dependencies {
+
     compile('org.apache.tomcat:tomcat-jdbc:7.0.42')
     compile('net.sf.ehcache:ehcache-core:2.4.6')
     compile("org.springframework:spring-core:4.0.2.RELEASE")
@@ -88,6 +89,7 @@ dependencies {
     compile("org.thymeleaf:thymeleaf-spring4:2.1.2.RELEASE")
     compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.2.2")
     compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.1.RELEASE")
+    compile 'edu.vt.middleware:vt-password:3.1.2'
 
     compile 'org.webjars:jquery:2.1.0-2'
     compile 'org.webjars:bootstrap:3.1.1'

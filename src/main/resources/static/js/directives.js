@@ -105,3 +105,25 @@ directives.directive('pager', function () {
       }
     };
 });
+
+directives.directive('feedbackFormGroup', function () {
+    return {
+      templateUrl: '/partials/shared/feedbackFormGroup.html',
+      replace: true,
+      transclude: true,
+      scope: {
+        field: '='
+      },
+      link: function($scope) {
+        $scope.invalid = function() {
+            return $scope.field.$dirty && $scope.field.$invalid;
+        };
+        $scope.valid = function() {
+            return $scope.field.$pristine || $scope.field.$valid;
+        };
+        $scope.feedback = function() {
+            return $scope.field.$dirty;
+        };
+      }
+    };
+});

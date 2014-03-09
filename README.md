@@ -77,6 +77,7 @@ git clone this project and get right down to implementing features.
     - Validation at the Controller level
     - Validation at the Entity level
     - Validation of External Configuration
+    - Strong password validator via [vt-password](http://code.google.com/p/vt-middleware/wiki/vtpassword)
 
 - JMS Messaging via ActiveMQ
     - JMSTemplate
@@ -219,13 +220,17 @@ You can now build a war file to deploy to your container
 
     ./gradlew clean war
 
-#### Production Mode ####
+#### Development Mode ####
 
-Flip a switch in application.properties in order to run in production mode
+Flip a switch in application.properties in order to run in development mode
 
-    info.app.development=false
+    info.app.development=true
 
-This switches to using the minified version of the application javascript.
+This change switches from using the minified version of the app javascript to the un-minified
+
+You may also want to turn off the thymeleaf cache in application.properties during development
+
+    spring.thymeleaf.cache=false
 
 #### More customization options ####
 

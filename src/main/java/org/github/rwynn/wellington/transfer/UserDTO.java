@@ -2,11 +2,11 @@ package org.github.rwynn.wellington.transfer;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.sql.Update;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.github.rwynn.wellington.validation.NewUser;
+import org.github.rwynn.wellington.validation.StrongPassword;
 import org.github.rwynn.wellington.validation.UpdateLock;
 import org.github.rwynn.wellington.validation.UpdateRoles;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -20,6 +20,7 @@ public class UserDTO implements Serializable {
     private String username;
 
     @NotEmpty(message = "{org.github.rwynn.wellington.transfer.UserDTO.password.NotEmpty.message}", groups = NewUser.class)
+    @StrongPassword(groups = NewUser.class)
     private String password;
 
     @NotNull(message = "{org.github.rwynn.wellington.transfer.UserDTO.locked.NotNull.message}", groups = UpdateLock.class)

@@ -9,11 +9,10 @@ var controllers = angular.module('wellington.controllers', []);
 controllers.controller('Register', ['$scope', '$location', '$route', 'RegisterService', 'MessageService',
     function($scope, $location, $route, RegisterService, MessageService) {
 
-    $scope.username = null;
-    $scope.password = null;
+    $scope.form = { username: null, password: null };
 
     $scope.register = function() {
-       var promise = RegisterService.register($scope.username, $scope.password);
+       var promise = RegisterService.register($scope.form.username, $scope.form.password);
        promise.then(function(result) {
           if (result) {
             MessageService.addSuccess("Registration completed");
@@ -22,13 +21,6 @@ controllers.controller('Register', ['$scope', '$location', '$route', 'RegisterSe
             $route.reload();
           }
        });
-    };
-
-    $scope.checkDone = function(e) {
-        MessageService.clear();
-        if (e.keyCode == 13) {
-            $scope.register();
-        }
     };
 
     $scope.cancel = function() {
@@ -122,13 +114,13 @@ controllers.controller('Admin', ['$scope', '$routeParams', '$location', 'UsersSe
         if (!AuthService.isAdmin($scope.selected.authorities)) {
             promise = UsersService.updateAuthorities($scope.selected.username,
                 [AuthService.ROLE_ADMIN]);
+            promise.then(function(result) {
+                if (result) {
+                    $scope.selected = undefined;
+                    $scope.loadView();
+                }
+            });
         }
-        promise.then(function(result) {
-            if (result) {
-                $scope.selected = undefined;
-                $scope.loadView();
-            }
-        });
     };
 
     $scope.toggleLock = function() {

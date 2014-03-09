@@ -147,14 +147,19 @@ describe('Wellington', function() {
         });
 
         it('should allow a user to register using email and password', function() {
-            register("user@email.com", "user");
+            register("user@email.com", "T1gB3!xQuX");
             expectSuccess("Registration completed");
         });
 
 
         it('should only allow a user to register once', function() {
-            register("user@email.com", "user");
+            register("user@email.com", "T1gB3!xQuX");
             expectError("User already exists");
+        });
+
+        it('should not allow weak passwords', function() {
+            register("weak@email.com", "123");
+            expectError("Invalid Password");
         });
     });
 
@@ -168,7 +173,7 @@ describe('Wellington', function() {
 
 
         it('should show allow a successful login', function() {
-            login('user@email.com', 'user');
+            login('user@email.com', 'T1gB3!xQuX');
             expectTabs(["Home"]);
             logout();
         });
@@ -183,7 +188,7 @@ describe('Wellington', function() {
 
         it('should allow pagination of system users', function() {
             for (var i=0; i<20; ++i) {
-                register("user" + i + "@email.com", "user");
+                register("user" + i + "@email.com", "T1gB3!xQuX");
             }
             login('admin', 'admin');
             expectTabs(["Home", "Admin"]);
