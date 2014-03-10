@@ -157,6 +157,18 @@ task protractorRun(type: Exec) {
     }
 }
 
+task karmaRun(type: Exec) {
+    group = "Build"
+    description = "Runs unit tests"
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd','/c', "node", "$rootProject.projectDir/node_modules/karma/bin/karma",
+                "start", "$rootProject.projectDir/src/test/javascript/karma.conf.js"
+    } else {
+        commandLine = ["$rootProject.projectDir/node_modules/karma/bin/karma",
+                "start", "$rootProject.projectDir/src/test/javascript/karma.conf.js"]
+    }
+}
+
 task jooqClean(type: Delete) {
     delete file("$rootProject.projectDir/src/main/java/${jooqPackage}")
 }

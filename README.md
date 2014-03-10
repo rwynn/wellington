@@ -44,6 +44,8 @@ git clone this project and get right down to implementing features.
         - combination
         - minification
         - source map
+        - [karma](http://karma-runner.github.io/) javascript unit testing
+            - ./gradlew karmaRun
 
 - Java Based Spring Configuration via annotations
 
@@ -237,6 +239,14 @@ Change the build target from jar to war in build.gradle
 You can now build a war file to deploy to your container
 
     ./gradlew clean war
+
+#### Unit Testing the Angular app ####
+
+To start Karma in watch mode simply run the following:
+
+    ./gradlew karmaRun
+
+You can simply edit your javascript files and the tests will be re-run on modification
 
 #### Development Mode ####
 
