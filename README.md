@@ -240,6 +240,12 @@ You can now build a war file to deploy to your container
 
     ./gradlew clean war
 
+If you are using Spring Tool Suite or Eclipse, you need to run
+
+    ./gradlew eclipseWtp
+
+to reconfigure your project so you can drag the app directly to tc Server.
+
 #### Unit Testing the Angular app ####
 
 To start Karma in watch mode simply run the following:

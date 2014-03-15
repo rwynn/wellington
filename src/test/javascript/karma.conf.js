@@ -2,11 +2,21 @@ module.exports = function(config){
     config.set({
     basePath : '../../../',
 
+    preprocessors: {
+        'src/main/resources/static/partials/**/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor: {
+          stripPrefix: 'src/main/resources/static',
+          moduleName: 'templates'
+    },
+
     files : [
       'src/test/javascript/unit/angular/angular.js',
       'src/test/javascript/unit/angular/angular-*.js',
       'src/main/resources/static/js/**/*.js',
-      'src/test/javascript/unit/*.js'
+      'src/test/javascript/unit/*.js',
+      'src/main/resources/static/partials/**/*.html'
     ],
 
     exclude : [
@@ -25,7 +35,8 @@ module.exports = function(config){
             'karma-junit-reporter',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-jasmine'
+            'karma-jasmine',
+            'karma-ng-html2js-preprocessor'
             ],
 
     junitReporter : {

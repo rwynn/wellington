@@ -20,6 +20,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'jacoco'
