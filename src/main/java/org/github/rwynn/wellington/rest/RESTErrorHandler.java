@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -121,10 +122,10 @@ public class RESTErrorHandler {
         request.setAttribute("javax.servlet.error.exception", throwable);
         request.setAttribute("javax.servlet.error.status_code", status.value());
         ErrorController errorController = new ErrorController();
-        Map<String, Object> map = errorController.error(request);
+        ResponseEntity<Map<String, Object>> responseEntity = errorController.error(request);
         request.removeAttribute("javax.servlet.error.exception");
         request.removeAttribute("javax.servlet.error.status_code");
-        return (String) map.get("correlationId");
+        return (String) responseEntity.getBody().get("correlationId");
     }
 
 }

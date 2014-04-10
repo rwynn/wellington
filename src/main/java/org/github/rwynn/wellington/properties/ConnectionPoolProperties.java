@@ -2,7 +2,7 @@ package org.github.rwynn.wellington.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(name = "org.github.rwynn.wellington.database.pool")
+@ConfigurationProperties(value = "org.github.rwynn.wellington.database.pool")
 public class ConnectionPoolProperties {
 
     private boolean jmxEnabled;

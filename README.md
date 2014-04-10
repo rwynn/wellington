@@ -46,6 +46,9 @@ git clone this project and get right down to implementing features.
         - source map
         - [karma](http://karma-runner.github.io/) javascript unit testing
             - ./gradlew karmaRun
+    - auto builds git.properties and packages it in your application
+        - contains the working branch and commit id
+        - spring actuator makes this information available at the /info endpoint
 
 - Java Based Spring Configuration via annotations
 
@@ -169,9 +172,9 @@ Create database tables via flyway (from project dir)
 
     ./gradlew flywayMigrate
 
-Run all tests and generate test reports
+Build the application
 
-    ./gradlew test
+    ./gradlew build
 
 Run the Web App on port 8080 (from project dir)
 

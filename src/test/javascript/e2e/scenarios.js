@@ -158,8 +158,8 @@ describe('Wellington', function() {
         });
 
         it('should not allow weak passwords', function() {
-            register("weak@email.com", "123");
-            expectError("Invalid Password");
+            register("weak@email.com", "123456789");
+            expectError("Please choose a stronger password. Your password should be between 8 and 16 characters and contain a mix of digits and letters.");
         });
     });
 

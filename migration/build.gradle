@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath("com.googlecode.flyway:flyway-gradle-plugin:2.3")
-        classpath("postgresql:postgresql:9.1-901.jdbc4")
+        classpath("org.postgresql:postgresql:9.3-1101-jdbc41")
     }
 }
 

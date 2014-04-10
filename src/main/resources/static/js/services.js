@@ -74,7 +74,32 @@ services.factory('IsAdmin', ['$q', 'AuthService', function($q, AuthService) {
     return self;
 }]);
 
-services.factory('EnvService', ['$http', '$q', 'MessageService', function($http, $q, MessageService) {
+services.factory('InfoService', ['$http', '$q', 'MessageService', function($http, $q, MessageService) {
+    var self = {};
+    self.load = function() {
+        var deferred = $q.defer();
+        if (self.result) {
+            deferred.resolve(self.result);
+        } else {
+            $http.get("/info").
+            success(function(data){
+                var result = { git: [] };
+                result.git.push({name: "git.branch", value: data.git.branch});
+                result.git.push({name: "git.commit.id", value:data.git.commit.id});
+                self.result = result;
+                deferred.resolve(result);
+            }).
+            error(function(){
+                MessageService.addError("Unable to retrieve application information");
+                deferred.resolve(null);
+            });
+        }
+        return deferred.promise;
+    };
+    return self;
+}]);
+
+services.factory('EnvService', ['$http', '$q', 'InfoService', 'MessageService', function($http, $q, InfoService, MessageService) {
     var self = {};
     self.load = function() {
         var deferred = $q.defer();
@@ -83,7 +108,7 @@ services.factory('EnvService', ['$http', '$q', 'MessageService', function($http,
         } else {
             $http.get("/env").
             success(function(data){
-                var key;
+                var key, promise;
                 var result = { classpath: [], appProps: [], javaProps: [] };
                 var classpath = data.systemProperties['java.class.path'];
                 for (key in data) {
@@ -103,8 +128,14 @@ services.factory('EnvService', ['$http', '$q', 'MessageService', function($http,
                     }
                 }
                 result.classpath = classpath.split(data.systemProperties['path.separator']);
-                self.result = result;
-                deferred.resolve(result);
+                promise = InfoService.load();
+                promise.then(function(response) {
+                      if (response !== null) {
+                        result.appProps.push.apply(result.appProps, response.git);
+                      }
+                      self.result = result;
+                      deferred.resolve(result);
+                });
             }).
             error(function(){
                 MessageService.addError("Unable to retrieve environment information");

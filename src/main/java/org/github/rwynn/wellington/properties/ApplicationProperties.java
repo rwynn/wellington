@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
-@ConfigurationProperties(name = "info.app")
+@ConfigurationProperties(value = "info.app")
 @Component("appProps")
 public class ApplicationProperties {
 

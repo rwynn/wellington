@@ -11,12 +11,13 @@
                 </div>
                 <div feedback-form-group="true" field="registrationForm.regPassword">
                     <label for="regPassword">Password</label>
-                    <input ng-model="form.password" required="true" type="password" class="form-control" name="regPassword" id="regPassword" placeholder="Enter password">
+                    <input ng-model="form.password" ng-minlength="8" ng-maxlength="16" required="true" type="password" class="form-control" name="regPassword" id="regPassword" placeholder="Enter password">
                 </div>
                 <button type="submit" ng-disabled="registrationForm.$invalid" class="btn btn-success">Submit</button>
                 <button type="button" ng-click="cancel()" class="btn btn-default">Cancel</button>
                 <p></p>
                 <div class="alert alert-danger" ng-show="registrationForm.regUsername.$error.email">Please enter a valid email address</div>
+                <div class="alert alert-danger" ng-show="registrationForm.regPassword.$error.minlength || registrationForm.regPassword.$error.maxlength">Your password must be between 8 and 16 characters</div>
             </form>
         </div>
 

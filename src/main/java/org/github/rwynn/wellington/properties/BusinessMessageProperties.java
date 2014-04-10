@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.validation.constraints.NotNull;
 
-@ConfigurationProperties(name = "org.github.rwynn.wellington.business.message")
+@ConfigurationProperties(value = "org.github.rwynn.wellington.business.message")
 public class BusinessMessageProperties {
 
     @NotNull

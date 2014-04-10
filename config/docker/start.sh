@@ -19,6 +19,9 @@ cd /app
 # run flyway to update DB
 sudo ./gradlew flywayMigrate
 
+# build the app
+sudo ./gradlew build
+
 # run spring boot app
 sudo ./gradlew bootRun
 
