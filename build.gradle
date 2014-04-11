@@ -226,3 +226,4 @@ processResources.finalizedBy writeGitInfo
 clean.dependsOn jooqClean
 protractorRun.dependsOn project(':migration').cleanAndMigrate
 protractorRun.dependsOn webdriverUpdate
+writeGitInfo.onlyIf { file("$rootProject.projectDir/.git").exists() }

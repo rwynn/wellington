@@ -84,8 +84,10 @@ services.factory('InfoService', ['$http', '$q', 'MessageService', function($http
             $http.get("/info").
             success(function(data){
                 var result = { git: [] };
-                result.git.push({name: "git.branch", value: data.git.branch});
-                result.git.push({name: "git.commit.id", value:data.git.commit.id});
+                if (!!data.git) {
+                    result.git.push({name: "git.branch", value: data.git.branch});
+                    result.git.push({name: "git.commit.id", value:data.git.commit.id});
+                }
                 self.result = result;
                 deferred.resolve(result);
             }).
