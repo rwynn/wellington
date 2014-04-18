@@ -84,9 +84,9 @@ dependencies {
     testCompile("junit:junit:4.11")
     testCompile('org.mockito:mockito-all:1.9.5')
 
-    compile("org.jooq:jooq:3.2.2")
-    jooq("org.jooq:jooq-meta:3.2.2")
-    jooq("org.jooq:jooq-codegen:3.2.2")
+    compile("org.jooq:jooq:3.3.1")
+    jooq("org.jooq:jooq-meta:3.3.1")
+    jooq("org.jooq:jooq-codegen:3.3.1")
     jooq(files("config/jooq"))
 
     compile("org.thymeleaf:thymeleaf-spring4:2.1.2.RELEASE")
