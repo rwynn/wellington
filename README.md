@@ -3,7 +3,7 @@ Wellington
 This project is meant to provide a base for Spring Boot development.  The idea is to be able to
 git clone this project and get right down to implementing features.
 
-[![Build Status](https://travis-ci.org/rwynn/wellington.png.png?branch=master)](https://travis-ci.org/rwynn/wellington)
+[![Build Status](https://travis-ci.org/rwynn/wellington.svg?branch=master)](https://travis-ci.org/rwynn/wellington)
 
 ### A look inside ###
 
