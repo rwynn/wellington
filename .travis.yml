@@ -1,7 +1,12 @@
 language: java
+addons:
+  postgresql: "9.3"
 cache:
   directories:
   - .gradle
   - $HOME/.gradle
   - node_modules
+before_script:
+  - psql -c "ALTER USER postgres WITH PASSWORD 'connect';" -U postgres
+  - psql -c 'create database spring;' -U postgres
 after_success: ./gradlew karmaRun
