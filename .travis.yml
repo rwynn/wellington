@@ -6,6 +6,6 @@ cache:
   - .gradle
   - $HOME/.gradle
   - node_modules
-before_script:
+before_install:
   - psql -c "ALTER USER postgres WITH PASSWORD 'connect'; create database spring;" -U postgres
 after_success: ./gradlew karmaRun
