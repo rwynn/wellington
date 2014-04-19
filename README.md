@@ -1,6 +1,5 @@
-Wellington is a fully loaded Spring Boot Starter project
+Wellington image:https://travis-ci.org/rwynn/wellington.png?branch=master["Build Status", link="https://travis-ci.org/rwynn/wellington"]
 ===============
-
 This project is meant to provide a base for Spring Boot development.  The idea is to be able to
 git clone this project and get right down to implementing features.
 
