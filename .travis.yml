@@ -1,0 +1,7 @@
+language: java
+cache:
+  directories:
+  - .gradle
+  - $HOME/.gradle
+  - node_modules
+after_success: ./gradlew karmaRun
