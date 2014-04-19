@@ -9,4 +9,5 @@ cache:
 before_install:
   - psql -c "ALTER USER postgres WITH PASSWORD 'connect';" -U postgres
   - psql -c "create database spring;" -U postgres
+  - ./gradlew flywayMigrate
 after_success: ./gradlew karmaRun
