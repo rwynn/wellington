@@ -10,7 +10,7 @@ sudo service postgresql restart
 
 sudo ln -s /etc/activemq/instances-available/main /etc/activemq/instances-enabled/main
 
-sudo /apache-activemq-5.9.0/bin/activemq start
+sudo service activemq start
 
 chmod 0755 /app/gradlew
 

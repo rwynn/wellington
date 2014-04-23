@@ -126,13 +126,15 @@ Prerequisites
 
 - [Docker](https://www.docker.io/)
 
+Note: this assumes your docker binary is *docker.io*
+
 Build the docker image
 
-    sudo docker build -t spring .
+    sudo docker.io build -t spring .
 
 Run the docker image with port mapping
 
-    sudo docker run -p 8080:8080 -i -t spring
+    sudo docker.io run -p 8080:8080 -i -t spring
 
 If everything goes well you should eventually see a message like the following in your console:
 
@@ -142,19 +144,19 @@ You should now be able to access the application on your host system by visiting
 
 If you would like to save the container you created as a tar file and reuse it:
 
-    sudo docker ps -a
+    sudo docker.io ps -a
     // note the container id for the tag spring:latest
-    sudo docker export 8bf522a7ee22 > spring.tar
+    sudo docker.io export 8bf522a7ee22 > spring.tar
     // where 8bf522a7ee22 is the container id noted in the previous command
 
 You can then restore the result tar into docker using the following command
 
-    cat spring.tar | sudo docker import - spring:new
+    cat spring.tar | sudo docker.io import - spring:new
 
 If you would like to remove all Docker related assets you can use the following commands:
 
-    sudo docker rm `sudo docker ps -a -q`
-    sudo docker rmi `sudo docker images -q`
+    sudo docker.io rm `sudo docker.io ps -a -q`
+    sudo docker.io rmi `sudo docker.io images -q`
 
 #### Running the application without docker ####
 
