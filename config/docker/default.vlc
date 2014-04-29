@@ -1,0 +1,16 @@
+backend default {
+    .host = "127.0.0.1";
+    .port = "8080";
+}
+
+sub vcl_recv {
+    if (req.url ~ "^/(webjars|js|css|partials)") {
+        unset req.http.cookie;
+    }
+}
+
+sub vcl_fetch {
+    if (req.url ~ "^/(webjars|js|css|partials)") {
+        unset beresp.http.set-cookie;
+    }
+}

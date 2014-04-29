@@ -126,21 +126,21 @@ Prerequisites
 
 - [Docker](https://www.docker.io/)
 
-Note: this assumes your docker binary is *docker.io*
+Note: this assumes your docker binary is **docker.io**
 
-Build the docker image
+Build the docker image (rerun this after making any changes to your app)
 
     sudo docker.io build -t spring .
 
 Run the docker image with port mapping
 
-    sudo docker.io run -p 8080:8080 -i -t spring
+    sudo docker.io run -p 80:80 -i -t spring
 
 If everything goes well you should eventually see a message like the following in your console:
 
     Started Application in 14.034 seconds (JVM running for 14.538)
 
-You should now be able to access the application on your host system by visiting http://localhost:8080
+You should now be able to access the application on your host system by visiting http://localhost
 
 If you would like to save the container you created as a tar file and reuse it:
 
@@ -187,7 +187,7 @@ Run the Web App on port 8080 (from project dir)
 
 By default the system will have 1 admin user with credentials (admin/admin).
 
-You can login at http://localhost:8080.
+You can login at http://localhost:8080 or simply http://localhost if using Docker.
 
 You can register new users by clicking the Register link before login.
 
@@ -203,7 +203,7 @@ Start the app if not already started
 
     ./gradlew bootRun
 
-Run protractor
+Run protractor (update baseUrl in protractor-conf.js to http://localhost if running with Docker)
 
     ./gradlew protractorRun
 
@@ -272,9 +272,32 @@ You may also want to turn off the thymeleaf cache in application.properties duri
 
     spring.thymeleaf.cache=false
 
+And also turn off the static resource cache
+
+    spring.resources.cachePeriod=0
+
 #### More customization options ####
 
 See [Spring Boot Reference Guide](http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/)
+
+#### Notes on the Docker support ####
+
+The docker config by default sets up Postgresql, ActiveMQ, and Varnish to support your application.  When moving
+to a production deployment you can leverage
+[AWS Elastic Beanstalk for Docker](http://aws.typepad.com/aws/2014/04/aws-elastic-beanstalk-for-docker.html),
+with minimal changes to your application.
+
+The documentation on how to do this should be pretty straigtforward.  You basically upload a zip file containing
+your entire project.  Since it contains a Dockerfile, AWS EB will detect this and setup your application, with
+all the additional benefits of AWS EB such as provisioning, monitoring, scaling, and load balancing.
+
+One change that you will probably want to make is to use a database external to your Docker image.  You can
+use Amazon RDS, for example, to create a Postgresql database.  The only change you would need to make is to update
+**application.properties** and **jooq-config.xml** with the connection settings for your RDS database before
+uploading your .zip file.
+
+Optionally, you can also remove the steps in Dockerfile and the config/docker directory that deal with
+setting up Postgresql (since it will be managed separately).
 
 #### License ####
 Wellington is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).

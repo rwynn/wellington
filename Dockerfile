@@ -14,7 +14,7 @@ RUN cd /tmp ; echo -en '#!/bin/bash\nexit 0\n' > DEBIAN/postinst
 RUN cd /tmp ; dpkg-deb -b . /fuse.deb
 RUN cd /tmp ; dpkg -i /fuse.deb
 
-RUN apt-get install -y activemq postgresql openjdk-7-jdk nodejs
+RUN apt-get install -y varnish activemq postgresql openjdk-7-jdk nodejs
 
 ADD config /app/config
 ADD migration /app/migration
@@ -25,7 +25,9 @@ ADD settings.gradle /app/settings.gradle
 ADD build.gradle /app/build.gradle
 
 RUN chmod 0755 /app/config/docker/start.sh
+RUN chmod 0755 /app/config/docker/install.sh
+RUN /app/config/docker/install.sh
 
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["/app/config/docker/start.sh"]
