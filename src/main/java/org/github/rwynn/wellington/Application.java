@@ -5,7 +5,7 @@ import org.github.rwynn.wellington.persistence.PersistenceConfig;
 import org.github.rwynn.wellington.properties.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jms.JmsTemplateAutoConfiguration;
+import org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCaching
 @EnableJpaRepositories
 @EnableTransactionManagement
-@EnableAutoConfiguration(exclude = {JpaBaseConfiguration.class, HibernateJpaAutoConfiguration.class, JmsTemplateAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {JpaBaseConfiguration.class, HibernateJpaAutoConfiguration.class, JmsAutoConfiguration.class})
 @EnableConfigurationProperties({ApplicationProperties.class, DatabaseProperties.class, ConnectionPoolProperties.class, JmsProperties.class, BusinessMessageProperties.class })
 @ComponentScan
 @Import({ PersistenceConfig.class, JMSConfig.class })

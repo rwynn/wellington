@@ -13,8 +13,8 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.1.RELEASE")
-        classpath('com.eriwen:gradle-js-plugin:1.9.0')
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.5.RELEASE")
+        classpath('com.eriwen:gradle-js-plugin:1.11.1')
         classpath("org.postgresql:postgresql:9.3-1101-jdbc41")
         classpath('org.ajoberstar:gradle-git:0.6.3')
     }
@@ -33,7 +33,7 @@ apply plugin: 'pmd'
 apply plugin: 'js'
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.9'
+    gradleVersion = '1.12'
 }
 
 jar {
@@ -57,14 +57,14 @@ dependencies {
 
     compile('org.apache.tomcat:tomcat-jdbc:7.0.52')
     compile('net.sf.ehcache:ehcache-core:2.4.6')
-    compile("org.springframework:spring-core:4.0.3.RELEASE")
-    compile("org.springframework:spring-jms:4.0.3.RELEASE")
-    compile("org.springframework:spring-context-support:4.0.3.RELEASE")
-    compile("org.springframework:spring-orm:4.0.3.RELEASE")
-    compile("org.springframework:spring-web:4.0.3.RELEASE")
-    compile("org.springframework:spring-webmvc:4.0.3.RELEASE")
-    compile("org.springframework.boot:spring-boot-starter-web:1.0.1.RELEASE")
-    compile("org.springframework.boot:spring-boot-starter-actuator:1.0.1.RELEASE")
+    compile("org.springframework:spring-core:4.0.6.RELEASE")
+    compile("org.springframework:spring-jms:4.0.6.RELEASE")
+    compile("org.springframework:spring-context-support:4.0.6.RELEASE")
+    compile("org.springframework:spring-orm:4.0.6.RELEASE")
+    compile("org.springframework:spring-web:4.0.6.RELEASE")
+    compile("org.springframework:spring-webmvc:4.0.6.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-web:1.1.5.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-actuator:1.1.5.RELEASE")
     compile("org.springframework.data:spring-data-jpa:1.4.1.RELEASE")
     compile("org.hibernate:hibernate-entitymanager:4.3.5.Final")
     compile("org.hibernate:hibernate-core:4.3.5.Final")
@@ -74,8 +74,8 @@ dependencies {
     compile("org.postgresql:postgresql:9.3-1101-jdbc41")
     compile("org.yaml:snakeyaml:1.13")
     compile("org.apache.activemq:activemq-client:5.9.0")
-    compile("org.springframework.security:spring-security-web:3.2.3.RELEASE")
-    compile("org.springframework.security:spring-security-config:3.2.3.RELEASE")
+    compile("org.springframework.security:spring-security-web:3.2.5.RELEASE")
+    compile("org.springframework.security:spring-security-config:3.2.5.RELEASE")
 
     compile("com.ibm.icu:icu4j:3.4.4")
     compile('net.sf.dozer:dozer:5.4.0')  {

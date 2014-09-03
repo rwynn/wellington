@@ -17,10 +17,12 @@ controllers.controller('Register', ['$scope', '$location', '$route', 'RegisterSe
           if (result) {
             MessageService.addSuccess("Registration completed");
             $location.path("/registered");
-          } else {
-            $route.reload();
           }
        });
+    };
+
+    $scope.resetMessages = function() {
+        MessageService.clear();
     };
 
     $scope.cancel = function() {

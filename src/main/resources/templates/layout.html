@@ -76,7 +76,12 @@
 <script src="/webjars/angularjs/1.2.13/angular-route.js"></script>
 <script src="/webjars/angularjs/1.2.13/angular-animate.js"></script>
 
-<script th:if="${@appProps.development}" src="/js/all.js"></script>
+<script th:if="${@appProps.development}" src="/js/app.js"></script>
+<script th:if="${@appProps.development}" src="/js/services.js"></script>
+<script th:if="${@appProps.development}" src="/js/controllers.js"></script>
+<script th:if="${@appProps.development}" src="/js/filters.js"></script>
+<script th:if="${@appProps.development}" src="/js/directives.js"></script>
+
 <script th:unless="${@appProps.development}" src="/js/all-min.js"></script>
 
 </body>

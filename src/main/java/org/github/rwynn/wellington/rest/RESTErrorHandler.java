@@ -28,6 +28,8 @@ public class RESTErrorHandler {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
+    static final String DEFAULT_MESSAGE = "defaultMessage";
+
     @Autowired
     DataErrorService dataErrorService;
 
@@ -50,7 +52,7 @@ public class RESTErrorHandler {
                                                         HttpServletRequest request, HttpServletResponse response) {
         String correlationId = logError(request, ex, HttpStatus.UNAUTHORIZED);
         Map<String, String> errors = new HashMap<String, String>();
-        errors.put("", "Unauthorized");
+        errors.put(DEFAULT_MESSAGE, "Unauthorized");
         RESTResult<Object> objectRESTResult = new RESTResult<Object>(null, null, Arrays.asList(errors));
         objectRESTResult.setCorrelationId(correlationId);
         return objectRESTResult;
@@ -85,7 +87,7 @@ public class RESTErrorHandler {
     public RESTResult<Object> handleInvalidJsonInputException(HttpMessageNotReadableException ex,
         HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> errors = new HashMap<String, String>();
-        errors.put("", "Malformed Input");
+        errors.put(DEFAULT_MESSAGE, "Malformed Input");
         String correlationId = logError(request, ex, HttpStatus.BAD_REQUEST);
         RESTResult<Object> objectRESTResult = new RESTResult<Object>(null, null, Arrays.asList(errors));
         objectRESTResult.setCorrelationId(correlationId);
@@ -98,7 +100,7 @@ public class RESTErrorHandler {
     public RESTResult<Object> handlePropertyReferenceException(PropertyReferenceException ex,
         HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> errors = new HashMap<String, String>();
-        errors.put("", ex.getMessage());
+        errors.put(DEFAULT_MESSAGE, ex.getMessage());
         String correlationId = logError(request, ex, HttpStatus.BAD_REQUEST);
         RESTResult<Object> objectRESTResult = new RESTResult<Object>(null, null, Arrays.asList(errors));
         objectRESTResult.setCorrelationId(correlationId);
@@ -111,7 +113,7 @@ public class RESTErrorHandler {
     public RESTResult<Object> handleRuntimeException(RuntimeException ex,
         HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> errors = new HashMap<String, String>();
-        errors.put("", ex.getMessage());
+        errors.put(DEFAULT_MESSAGE, ex.getMessage());
         String correlationId = logError(request, ex, HttpStatus.BAD_REQUEST);
         RESTResult<Object> objectRESTResult = new RESTResult<Object>(null, null, Arrays.asList(errors));
         objectRESTResult.setCorrelationId(correlationId);

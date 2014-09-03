@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-init="resetMessages()">
 
     <div class="col-md-8 col-md-offset-2">
 
@@ -7,11 +7,11 @@
             <form name="registrationForm" ng-submit="register()" role="form">
                 <div feedback-form-group="true" field="registrationForm.regUsername">
                     <label for="regUsername">Username</label>
-                    <input focus-me="true" ng-model="form.username" required="true" type="email" class="form-control" name="regUsername" id="regUsername" placeholder="Enter email">
+                    <input focus-me="true" ng-model="form.username" ng-change="resetMessages()" required="true" type="email" class="form-control" name="regUsername" id="regUsername" placeholder="Enter email">
                 </div>
                 <div feedback-form-group="true" field="registrationForm.regPassword">
                     <label for="regPassword">Password</label>
-                    <input ng-model="form.password" ng-minlength="8" ng-maxlength="16" required="true" type="password" class="form-control" name="regPassword" id="regPassword" placeholder="Enter password">
+                    <input ng-model="form.password" ng-change="resetMessages()" ng-minlength="8" ng-maxlength="16" required="true" type="password" class="form-control" name="regPassword" id="regPassword" placeholder="Enter password">
                 </div>
                 <button type="submit" ng-disabled="registrationForm.$invalid" class="btn btn-success">Submit</button>
                 <button type="button" ng-click="cancel()" class="btn btn-default">Cancel</button>
