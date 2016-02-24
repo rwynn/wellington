@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 public class ApplicationProperties {
 
     private String name;
+    private String year;
     private String description;
     private String version;
 
@@ -22,6 +23,14 @@ public class ApplicationProperties {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getDescription() {

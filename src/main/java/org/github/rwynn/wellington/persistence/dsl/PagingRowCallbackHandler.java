@@ -53,7 +53,7 @@ public class PagingRowCallbackHandler implements RowCallbackHandler {
             this.restPage.setHasPreviousPage((this.restPage.getPageNumber() + 1) < this.restPage.getTotalPages());
             this.restPage.setHasNextPage((this.restPage.getPageNumber() + 1) < this.restPage.getTotalPages());
             this.restPage.setFirstPage(this.restPage.getPageNumber() == 0);
-            this.restPage.setLastPage((this.restPage.getPageNumber() + 1) == this.restPage.getTotalPages());
+            this.restPage.setLastPage(this.restPage.getPageNumber() + 1 == this.restPage.getTotalPages());
             this.restPage.setTotalSize(resultSet.getInt(PagingConstants.COUNT));
             this.pageAttributesSet = true;
         }

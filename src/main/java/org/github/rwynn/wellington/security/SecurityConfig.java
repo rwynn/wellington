@@ -101,7 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public boolean matches(CharSequence rawPassword, String encodedPassword) {
                 StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-                return (passwordEncryptor.checkPassword(rawPassword.toString(), encodedPassword));
+                return passwordEncryptor.checkPassword(rawPassword.toString(), encodedPassword);
             }
         };
     }
@@ -123,7 +123,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         auth.authenticationProvider(daoAuthenticationProvider);
     }
 

@@ -9,6 +9,7 @@ var directives = angular.module('wellington.directives', []);
 directives.directive('nameValueTable', function () {
     return {
       templateUrl: '/partials/shared/nameValueTable.html',
+      transclude: true,
       replace: false,
       scope: {
         pairs: '=',
@@ -42,17 +43,98 @@ directives.directive('filter', function () {
       replace: false,
       scope: {
         'placeholder': '@',
+        'prefix': '@',
         'filter': '=value'
       },
       link: function(scope) {
+        scope.eventName = function() {
+          return [scope.prefix, 'filterChanged'].join('.');
+        };
         scope.checkKey = function(e) {
             if (e.keyCode == 13) {
-                scope.$emit('filterChanged', scope.filter);
+                scope.$emit(scope.eventName(), scope.filter);
             }
         };
         scope.clear = function() {
             scope.filter = "";
-            scope.$emit('filterChanged', scope.filter);
+            scope.$emit(scope.eventName(), scope.filter);
+        };
+      }
+    };
+});
+
+directives.directive('clientSorter', ['$filter', function ($filter) {
+    return {
+      templateUrl: '/partials/shared/sorter.html',
+      replace: true,
+      scope: {
+        'value': '@',
+        'prop' : '@',
+        'data': '=',
+        'column': '='
+      },
+      link: function(scope) {
+        var orderBy = $filter('orderBy');
+        scope.reverse = true;
+        scope.$watch('column', function(column) {
+          scope.isSorted = (column === scope.value);
+          if (!scope.isSorted) {
+            scope.reverse = false;
+          }
+        });
+        scope.isSortedAsc = function() {
+          return scope.isSorted && !scope.reverse;
+        };
+        scope.isSortedDesc = function() {
+          return scope.isSorted && scope.reverse;
+        };
+        scope.sort = function() {
+          scope.reverse = !scope.reverse;
+          scope.data = orderBy(scope.data, scope.prop, scope.reverse);
+          scope.column = scope.value;
+        };
+        if (scope.column === scope.value) {
+          scope.sort();
+        }
+      }
+    };
+}]);
+
+directives.directive('serverSorter', function () {
+    return {
+      templateUrl: '/partials/shared/sorter.html',
+      replace: true,
+      scope: {
+        'value': '@',
+        'prop': '@',
+        'prefix': '@',
+        'column': '='
+      },
+      link: function(scope) {
+        var ASC = 'asc',
+            DESC = 'desc';
+        if (!scope.column.sortDir) {
+          scope.column.sortDir = DESC;
+        }
+        scope.$watch('column.sort', function(column) {
+          scope.isSorted = (column === scope.prop);
+          if (!scope.isSorted) {
+            scope.column.sortDir = DESC;
+          }
+        });
+        scope.isSortedAsc = function() {
+          return scope.isSorted && scope.column.sortDir === ASC;
+        };
+        scope.isSortedDesc = function() {
+          return scope.isSorted && scope.column.sortDir === DESC;
+        };
+        scope.eventName = function() {
+          return [scope.prefix, 'sortChanged'].join('.');
+        };
+        scope.sort = function() {
+          scope.column.sort = scope.prop;
+          scope.column.sortDir = scope.column.sortDir === DESC ? ASC: DESC;
+          scope.$emit(scope.eventName(), scope.column);
         };
       }
     };
@@ -64,6 +146,7 @@ directives.directive('pager', function () {
       replace: false,
       scope: {
         state: '=',
+        prefix: '@',
         noResults: '@'
       },
       link: function(scope) {
@@ -93,14 +176,17 @@ directives.directive('pager', function () {
             }
             return avail;
         };
+        scope.eventName = function() {
+            return [scope.prefix, 'pageChanged'].join('.');
+        };
         scope.setPage = function(page) {
-            scope.$emit('pageChanged', page);
+            scope.$emit(scope.eventName(), page);
         };
         scope.prevPage = function() {
-            scope.$emit('pageChanged', scope.state.pageNumber - 1);
+            scope.$emit(scope.eventName(), scope.state.pageNumber - 1);
         };
         scope.nextPage = function() {
-            scope.$emit('pageChanged', scope.state.pageNumber + 1);
+            scope.$emit(scope.eventName(), scope.state.pageNumber + 1);
         };
       }
     };
@@ -124,6 +210,23 @@ directives.directive('feedbackFormGroup', function () {
         scope.feedback = function() {
             return scope.field && scope.field.$dirty;
         };
+      }
+    };
+});
+
+directives.directive('transcludeReplace', function () {
+    return {
+      link: function($scope, $element, $attrs, controller, $transclude) {
+        if ($attrs.ngTransclude === $attrs.$attr.ngTransclude) {
+          $attrs.ngTransclude = '';
+        }
+        function ngTranscludeCloneAttachFn(clone) {
+          if (clone.length) {
+            $element.replaceWith(clone);
+          }
+        }
+        var slotName = $attrs.ngTransclude || $attrs.ngTranscludeSlot;
+        $transclude(ngTranscludeCloneAttachFn, null, slotName);
       }
     };
 });

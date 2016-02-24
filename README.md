@@ -268,6 +268,10 @@ Flip a switch in application.properties in order to run in development mode
 
 This change switches from using the minified version of the app javascript to the un-minified
 
+This change also switches to serving static assets from the project source
+directory instead of from the packaged jar file so that you may reload
+the browser to see your changes immediately
+
 You may also want to turn off the thymeleaf cache in application.properties during development
 
     spring.thymeleaf.cache=false

@@ -12,14 +12,14 @@ public class PageConverter implements CustomConverter {
         if (sourceFieldValue instanceof Page) {
             Page existingPage = (Page) sourceFieldValue;
             RESTPage<Object> newPage = (RESTPage<Object>) existingDestinationFieldValue;
-            newPage.setHasNextPage(existingPage.hasNextPage());
+            newPage.setHasNextPage(existingPage.hasNext());
             newPage.setHasContent(existingPage.hasContent());
-            newPage.setFirstPage(existingPage.isFirstPage());
+            newPage.setFirstPage(existingPage.isFirst());
             newPage.setPageNumber(existingPage.getNumber());
             newPage.setContentSize(existingPage.getNumberOfElements());
-            newPage.setLastPage(existingPage.isLastPage());
+            newPage.setLastPage(existingPage.isLast());
             newPage.setTotalPages(existingPage.getTotalPages());
-            newPage.setHasPreviousPage(existingPage.hasPreviousPage());
+            newPage.setHasPreviousPage(existingPage.hasPrevious());
             newPage.setPageSize(existingPage.getSize());
             newPage.setTotalSize(existingPage.getTotalElements());
             return newPage;

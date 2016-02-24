@@ -35,21 +35,50 @@ controllers.controller('Admin', ['$scope', '$routeParams', '$location', 'UsersSe
     function($scope, $routeParams, $location, UsersService, MetricsService, EnvService, MessageService, IsAdmin, AuthService) {
 
     $scope.view = $routeParams.view;
-    $scope.page = parseInt($routeParams.page, 10) || 0;
-    $scope.filter = $routeParams.filter;
-
-    $scope.size = 5;
-    $scope.selected = undefined;
-
     if (!$scope.view) {
         $location.path("/admin/users");
         return;
     }
 
+    $scope.page = parseInt($location.search().page, 10) || 0;
+    $scope.filter = $location.search().filter;
+    $scope.sortCol = {
+      appProps: 'Name',
+      javaProps: 'Name',
+      users: {
+        sort: 'username',
+        sortDir: 'asc'
+      }
+    };
+
+    $scope.initSort = function() {
+      if ($location.search().sort) {
+        var sortDir = 'asc',
+            sort = $location.search().sort;
+        if (sort) {
+          var sortParams = sort.split(',');
+          if (sortParams.length > 0) {
+            sort = sortParams[0];
+          }
+          if (sortParams.length > 1) {
+            sortDir = sortParams[1];
+          }
+        }
+        $scope.sortCol.users = {
+          sort: sort,
+          sortDir: sortDir
+        };
+      }
+    };
+
+    $scope.size = 5;
+    $scope.selected = undefined;
+    $scope.initSort();
+
     $scope.loadView = function() {
         var promise;
         if ($scope.view == "users") {
-            promise = UsersService.load($scope.page, $scope.size, $scope.filter);
+            promise = UsersService.load($scope.page, $scope.size, $scope.filter, $scope.sortCol.users);
             promise.then(function(result) {
                 if (result) {
                     $scope.users = result.results;
@@ -76,23 +105,16 @@ controllers.controller('Admin', ['$scope', '$routeParams', '$location', 'UsersSe
         $scope.selected = user;
     };
 
-    $scope.$on('pageChanged', function(event, page) {
-        // when the pager updates the page then update route
-        if ($scope.filter) {
-            $location.path("/admin/users/" + page + "/" + $scope.filter);
-        } else {
-            $location.path("/admin/users/" + page);
-        }
-
+    $scope.$on('users.pageChanged', function(event, page) {
+        $location.search('page', page);
     });
 
-    $scope.$on('filterChanged', function(event, filter) {
-        $scope.filter = filter;
-        if ($scope.filter) {
-            $location.path("/admin/users/0/" + encodeURIComponent($scope.filter));
-        } else {
-            $location.path("/admin/users/");
-        }
+    $scope.$on('users.filterChanged', function(event, filter) {
+        $location.search('filter', filter);
+    });
+
+    $scope.$on('users.sortChanged', function(event, column) {
+        $location.search('sort', [column.sort, column.sortDir].join(','));
     });
 
     $scope.isSelectedAdmin = function() {

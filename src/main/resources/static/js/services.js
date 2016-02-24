@@ -68,7 +68,7 @@ services.factory('IsAdmin', ['$q', 'AuthService', function($q, AuthService) {
         if (authorities && AuthService.isAdmin(authorities)) {
             deferred.resolve(true);
         } else {
-            deferred.reject();
+            deferred.reject(authorities);
         }
     });
     return self;
@@ -180,7 +180,7 @@ services.factory('MetricsService', ['$http', '$q', 'MessageService', function($h
 
 services.factory('UsersService', ['$http', '$q', 'MessageService', function($http, $q, MessageService) {
     var self = {};
-    self.load = function(page, size, filter) {
+    self.load = function(page, size, filter, sort) {
         var path = '/users/admin/list';
         var args = {};
         if (page) {
@@ -191,6 +191,9 @@ services.factory('UsersService', ['$http', '$q', 'MessageService', function($htt
         }
         if (filter) {
             args.filter = filter;
+        }
+        if (sort) {
+            args.sort = [sort.sort, sort.sortDir].join(',');
         }
         path = path + '?' + $.param(args);
         var deferred = $q.defer();

@@ -2,7 +2,7 @@ package org.github.rwynn.wellington.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.yaml.YamlMapFactoryBean;
+import org.springframework.beans.factory.config.YamlMapFactoryBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 

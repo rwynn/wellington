@@ -12,9 +12,15 @@
 
         <div ng-if="view == 'env'" class="show-hide">
 
-            <div name-value-table="true" title="Java Properties" pairs="env.javaProps" />
+            <div name-value-table="true" title="Java Properties" pairs="env.javaProps">
+              <div client-sorter='true' prop='name' value='Name' data='env.javaProps' column='sortCol.javaProps'></div>
+              <div client-sorter='true' prop='value' value='Value' data='env.javaProps' column='sortCol.javaProps'></div>
+            </div>
 
-            <div name-value-table="true" title="Application Properties" pairs="env.appProps" />
+            <div name-value-table="true" title="Application Properties" pairs="env.appProps">
+              <div client-sorter='true' prop='name' value='Name' data='env.appProps' column='sortCol.appProps'></div>
+              <div client-sorter='true' prop='value' value='Value' data='env.appProps' column='sortCol.appProps'></div>
+            </div>
 
             <div ordered-table="true" title="Class path" elements="env.classpath" />
 
@@ -90,11 +96,11 @@
         <div ng-if="view == 'users'" class="show-hide">
 
             <h3>System Users</h3>
-            <div filter="true" value="filter" placeholder="Filter by user name" />
+            <div filter="true" value="filter" prefix='users' placeholder="Filter by user name" />
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <td>Username</td>
+                        <td server-sorter='true' prefix='users' prop='username' value='Username' column='sortCol.users'></td>
                         <td>Authorities</td>
                         <td>Locked</td>
                         <td>Edit</td>
@@ -120,7 +126,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="4">
-                            <div pager="true" state="users" no-results="No users found" />
+                            <div pager="true" prefix="users" state="users" no-results="No users found" />
                         </td>
                     </tr>
                 </tfoot>

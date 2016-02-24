@@ -29,7 +29,7 @@ public class UserDaoImplTest {
 
     @Before
     public void init() {
-        Mockito.when(databaseProperties.getJooqDialect()).thenReturn("POSTGRES");
+        Mockito.when(databaseProperties.getJooqDialect()).thenReturn("POSTGRES_9_3");
     }
 
     @Test

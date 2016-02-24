@@ -2,6 +2,14 @@
     padding-top: 75px;
 }
 
+td.sort-column:hover {
+  cursor:pointer;
+}
+
+td.sort-column i {
+  font-size: 0.75em;
+}
+
 .metrics-view {
     overflow:auto;
     height:250px;

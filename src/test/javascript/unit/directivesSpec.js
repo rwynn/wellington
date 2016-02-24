@@ -10,9 +10,12 @@ describe('nameValueTable', function() {
   }));
   it('should display a table sorted by name', function() {
     scope.env = {
-        javaProps: [{ name: "version", value: "1.7" }, {name: "home", value: "/home/wellington"}]
+      javaProps: [{ name: "version", value: "1.7" }, {name: "home", value: "/home/wellington"}]
     };
-    elm = angular.element('<div name-value-table="true" title="Java Properties" pairs="env.javaProps" />');
+    scope.sortCol = {
+      javaProps: 'Name'
+    };
+    elm = angular.element("<div name-value-table='true' title='Java Properties' pairs='env.javaProps'><div client-sorter='true' prop='name' value='Name' data='env.javaProps' column='sortCol.javaProps'></div><div client-sorter='true' prop='value' value='Value' data='env.javaProps' column='sortCol.javaProps'></div></div>");
     compile(elm)(scope);
     scope.$digest();
     var title = elm.find("h3");
@@ -22,8 +25,8 @@ describe('nameValueTable', function() {
     var firstRow = rows.eq(0);
     var secondRow = rows.eq(1);
     expect(title.text()).toBe("Java Properties");
-    expect(head.find("td").eq(0).text()).toBe("Name");
-    expect(head.find("td").eq(1).text()).toBe("Value");
+    expect(head.find("td").eq(0).text().trim()).toBe("Name");
+    expect(head.find("td").eq(1).text().trim()).toBe("Value");
     expect(rows.length).toBe(2);
     expect(firstRow.find("td").eq(0).text()).toBe("home");
     expect(firstRow.find("td").eq(1).text()).toBe("/home/wellington");

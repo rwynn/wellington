@@ -2,13 +2,10 @@
 <div class="metrics-view">
     <table class="table table-striped">
         <thead>
-        <tr>
-            <td>Name</td>
-            <td>Value</td>
-        </tr>
+          <tr ng-transclude></tr>
         </thead>
         <tbody>
-        <tr ng-repeat="p in pairs | orderBy:'name'">
+        <tr ng-repeat="p in pairs">
             <td>{{ p.name }}</td>
             <td>{{ p.value }}</td>
         </tr>

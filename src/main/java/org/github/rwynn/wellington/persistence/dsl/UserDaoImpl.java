@@ -28,7 +28,13 @@ public class UserDaoImpl extends JooqDao implements UserDao {
         final RESTPage<UserDTO> page = new RESTPage<UserDTO>();
         page.setContent(new ArrayList<UserDTO>());
 
-        SelectQuery query = selectUserQuery(authorityEq());
+        SortField<String> sortField = USERS.USERNAME.asc();
+        if (pageable.getSort() != null &&
+            pageable.getSort().getOrderFor(USERS.USERNAME.getName()) != null &&
+            pageable.getSort().getOrderFor(USERS.USERNAME.getName()).isAscending() == false) {
+            sortField = USERS.USERNAME.desc();
+        }
+        SelectQuery query = selectUserQuery(authorityEq(), sortField);
 
         query.bind(AUTHORITIES.AUTHORITY.getName(), authority);
         query.bind(LIMIT, pageable.getPageSize());
@@ -56,7 +62,14 @@ public class UserDaoImpl extends JooqDao implements UserDao {
         final RESTPage<UserDTO> page = new RESTPage<UserDTO>();
         page.setContent(new ArrayList<UserDTO>());
 
-        SelectQuery query = selectUserQuery(userNameLike());
+        SortField<String> sortField = USERS.USERNAME.asc();
+        if (pageable.getSort() != null &&
+            pageable.getSort().getOrderFor(USERS.USERNAME.getName()) != null &&
+            pageable.getSort().getOrderFor(USERS.USERNAME.getName()).isAscending() == false) {
+            sortField = USERS.USERNAME.desc();
+        }
+
+        SelectQuery query = selectUserQuery(userNameLike(), sortField);
 
         query.bind(USERS.USERNAME.getName(), username);
         query.bind(LIMIT, pageable.getPageSize());
@@ -81,7 +94,7 @@ public class UserDaoImpl extends JooqDao implements UserDao {
     }
 
     protected SelectQuery<Record4<String, Boolean, String, Integer>>
-        selectUserQuery(Condition condition) {
+        selectUserQuery(Condition condition, SortField<String> sortField) {
         DSLContext context = getDslContext();
         return context.select(USERS.USERNAME, USERS.LOCKED, AUTHORITIES.AUTHORITY,
                 count(USERS.USERNAME).over().as(COUNT)).
@@ -89,7 +102,7 @@ public class UserDaoImpl extends JooqDao implements UserDao {
                 join(AUTHORITIES).
                 on(USERS.USERNAME.eq(AUTHORITIES.USERNAME)).
                 where(condition).
-                orderBy(USERS.USERNAME.asc()).
+                orderBy(sortField).
                 limit(DSL.param(LIMIT, Integer.class)).
                 offset(DSL.param(OFFSET, Integer.class)).
                 getQuery();

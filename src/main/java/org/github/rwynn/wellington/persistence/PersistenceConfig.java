@@ -3,7 +3,7 @@ package org.github.rwynn.wellington.persistence;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.github.rwynn.wellington.properties.ConnectionPoolProperties;
 import org.github.rwynn.wellington.properties.DatabaseProperties;
-import org.springframework.boot.yaml.YamlMapFactoryBean;
+import org.springframework.beans.factory.config.YamlMapFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
