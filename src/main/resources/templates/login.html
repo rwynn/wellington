@@ -8,7 +8,6 @@
 
     <form th:if="${#authorization.expression('hasRole(''ROLE_ANONYMOUS'')')}" th:fragment="form" class="navbar-form navbar-right" role="form"
             th:action="@{/login}" method="POST">
-
             <div class="form-group">
                 <input id="username" name="username" type="text" placeholder="Username" class="form-control"/>
             </div>
@@ -25,7 +24,10 @@
                  Welcome, <span th:text="${#authentication.name}">Username</span>
             </a>
         </li>
-        <li><a href="/logout" th:href="@{/logout}">Log out</a></li>
+        <li>
+            <a href="#" onclick="document.getElementById('logout').submit();">Log out</a>
+            <form id="logout" th:action="@{/logout}" method="POST"></form>
+        </li>
     </ul>
 
     <div layout:fragment="content">

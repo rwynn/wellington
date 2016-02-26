@@ -19,6 +19,12 @@ config(['$routeProvider', function($routeProvider) {
         {templateUrl: '/partials/admin.html', controller: 'Admin', resolve: { "IsAdmin": "IsAdmin" }});
     $routeProvider.otherwise({redirectTo: '/home'});
 }]).
+config(['$httpProvider', function($httpProvider) {
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    ['post', 'put', 'patch'].forEach(function(method) {
+      $httpProvider.defaults.headers[method]['X-CSRF-TOKEN'] = csrfToken;
+    });
+}]).
 run(['$rootScope', '$location', function($rootScope, $location) {
     $rootScope.$on("$routeChangeSuccess", function () {
         $('.navItem').removeClass("active").each(function() {

@@ -47,6 +47,9 @@ configurations {
     jooq {
         extendsFrom compile
     }
+    yuicompress {
+        extendsFrom compile
+    }
 }
 
 repositories {
@@ -99,6 +102,8 @@ dependencies {
     compile 'org.webjars:jquery:2.2.0'
     compile 'org.webjars:bootstrap:3.3.6'
     compile 'org.webjars:angularjs:1.5.0'
+
+    yuicompress("com.yahoo.platform.yui:yuicompressor:2.4.8")
 }
 
 jacocoTestReport {
@@ -186,6 +191,16 @@ task jooqGen(type: JavaExec) {
     args "/jooq-config.xml"
 }
 
+task minifyCss(type: JavaExec) {
+    def css_in = "$rootProject.projectDir/src/main/resources/static/css/app.css"
+    def css_out = "${buildDir}/resources/main/static/css/app-min.css"
+    inputs.file file("$css_in")
+    outputs.dir file("$css_out")
+    main = 'com.yahoo.platform.yui.compressor.Bootstrap'
+    classpath configurations.yuicompress
+    args = ["--type", "css", "-o", "$css_out", "$css_in"]
+}
+
 combineJs {
     source = jsSrcFiles
     dest = file("${buildDir}/resources/main/static/js/all.js")
@@ -233,6 +248,7 @@ test.finalizedBy jacocoTestReport
 test.finalizedBy check
 test.finalizedBy jsHint
 compileJava.dependsOn jooqGen
+processResources.finalizedBy minifyCss
 processResources.finalizedBy minifyJs
 processResources.finalizedBy devMode
 processResources.finalizedBy writeGitInfo
