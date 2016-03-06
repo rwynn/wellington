@@ -2,7 +2,7 @@ package org.github.rwynn.wellington.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -91,15 +91,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new PasswordEncoder() {
             @Override
             public String encode(CharSequence rawPassword) {
-                StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-                String encryptedPassword = passwordEncryptor.encryptPassword(rawPassword.toString());
-                return encryptedPassword;
+                return BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt(12));
             }
 
             @Override
             public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-                return passwordEncryptor.checkPassword(rawPassword.toString(), encodedPassword);
+                return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
             }
         };
     }

@@ -75,7 +75,7 @@ dependencies {
     compile("org.hibernate:hibernate-core:5.1.0.Final")
     compile("org.hibernate:hibernate-validator:5.1.0.Final")
     compile("org.aspectj:aspectjweaver:1.8.8")
-    compile("org.jasypt:jasypt:1.9.2")
+    compile("org.mindrot:jbcrypt:0.3m")
     compile("org.postgresql:postgresql:9.4.1207.jre7")
     compile("org.yaml:snakeyaml:1.16")
     compile("org.apache.activemq:activemq-client:5.9.0")

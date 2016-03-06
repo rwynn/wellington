@@ -45,7 +45,7 @@ ON authorities
 USING btree
 (username COLLATE pg_catalog."default", authority COLLATE pg_catalog."default");
 
-INSERT INTO users (username, key, locked) values ('admin', 'ckEp6WxJCG179tWVbQG7gL8gJ5YKzdrCHlgRTX/QvuYWfbr1BpKxlZKlyM3qFMiR', false);
+INSERT INTO users (username, key, locked) values ('admin', '$2a$12$ia3pMQa5lto1MVYHCPJ9WeZfRtHRJZd0i6TxBHpedBXdnc.9vSauy', false);
 
 INSERT INTO authorities (username, authority) values ('admin', 'ROLE_USER');
 INSERT INTO authorities (username, authority) values ('admin', 'ROLE_ADMIN');

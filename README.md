@@ -73,10 +73,10 @@ git clone this project and get right down to implementing features.
 - DAO based Spring security
     - REST endpoints authorized via authorities
     - Spring Service interfaces authorized via authorities
-    - Password digests using jasypt
-        - Algorithm: SHA-256.
-        - Salt size: 16 bytes.
-        - Iterations: 100000.
+    - Password hashing using [jBCrypt](http://www.mindrot.org/projects/jBCrypt/)
+        - Java implementation of OpenBSD's Blowfish
+        - Designed to raise the cost of off-line password cracking and
+          frustrate fast hardware implementation
 
 - JSR 303 Validation
     - Validation groups
