@@ -1,0 +1,6 @@
+* text=auto
+*.sh text eol=lf
+.gradlew text eol=lf
+config/docker/* text eol=lf
+config/upstart/* text eol=lf
+config/vagrant/* text eol=lf

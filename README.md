@@ -11,6 +11,10 @@ git clone this project and get right down to implementing features.
     - Automating the packaging and deployment of applications
     - Automated testing and continuous integration/deployment
 
+- Vagrant integration
+    - vagrant up from the root folder
+    - provisioning step will install the app and run it in the background
+
 - AngularJS Starter
     - Based on Angular seed
     - Basic Admin UI provided that leverages spring boot management endpoints
@@ -119,6 +123,20 @@ git clone this project and get right down to implementing features.
     - /beans
     - [More Endpoints](https://github.com/spring-projects/spring-boot/tree/master/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/endpoint)
     - Endpoints secured with Spring Security
+
+### Running the application with vagrant ###
+
+Prerequisites
+
+- [Vagrant](https://www.vagrantup.com/)
+
+Install the app and run in the background (takes a while the first time)
+
+    vagrant up
+
+The app will be provisioned and started in the background
+
+It may take a minute or two before you are able to reach http://localhost:8080 
 
 ### Running the application with docker ###
 
