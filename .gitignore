@@ -4,6 +4,7 @@ wellington.iws
 node_modules
 build
 out
+.vagrant
 .gradle
 .idea
 .eclipse

@@ -7,13 +7,13 @@ git clone this project and get right down to implementing features.
 
 ### A look inside ###
 
-- Docker integration
-    - Automating the packaging and deployment of applications
-    - Automated testing and continuous integration/deployment
-
 - Vagrant integration
     - vagrant up from the root folder
     - provisioning step will install the app and run it in the background
+
+- Docker integration
+    - Automating the packaging and deployment of applications
+    - Automated testing and continuous integration/deployment
 
 - AngularJS Starter
     - Based on Angular seed
@@ -134,9 +134,11 @@ Install the app and run in the background (takes a while the first time)
 
     vagrant up
 
-The app will be provisioned and started in the background
+The app will be provisioned, installed as an upstart service, and started in the background
 
-It may take a minute or two before you are able to reach http://localhost:8080 
+It may take a minute or two before you are able to reach http://localhost:8080
+
+Subsequent runs of vagrant up will start Wellington via upstart
 
 ### Running the application with docker ###
 
