@@ -5,7 +5,7 @@ import org.github.rwynn.wellington.convert.DozerConfig;
 import org.github.rwynn.wellington.persistence.User;
 import org.github.rwynn.wellington.persistence.UserRepository;
 import org.github.rwynn.wellington.properties.BusinessMessageProperties;
-import org.github.rwynn.wellington.security.SecurityConfig;
+import org.github.rwynn.wellington.security.SecurityUtils;
 import org.github.rwynn.wellington.transfer.UserDTO;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,8 +33,8 @@ public class UserServiceImplTest {
         dozerBeanMapperFactoryBean.afterPropertiesSet();
         userService.dozerBeanMapper = dozerConfig.dozerBeanMapper(dozerBeanMapperFactoryBean);
 
-        SecurityConfig securityConfig = new SecurityConfig();
-        userService.passwordEncoder = securityConfig.passwordEncoder();
+        SecurityUtils securityUtils = new SecurityUtils();
+        userService.passwordEncoder = securityUtils.passwordEncoder();
 
         BusinessMessageProperties businessMessageProperties = new BusinessMessageProperties();
         userService.businessMessageProperties = businessMessageProperties;

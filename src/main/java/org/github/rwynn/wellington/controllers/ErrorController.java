@@ -6,6 +6,7 @@ import org.github.rwynn.wellington.utils.SecurityContextUtils;
 import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
+import org.springframework.boot.autoconfigure.web.ErrorProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.request.RequestAttributes;
 
@@ -43,11 +44,11 @@ public class ErrorController extends BasicErrorController {
     }
 
     public ErrorController() {
-        super(new LoggingErrorAttributes());
+        super(new LoggingErrorAttributes(), new ErrorProperties());
     }
 
     public ErrorController(ErrorAttributes errorAttributes) {
-        super(errorAttributes);
+        super(errorAttributes, new ErrorProperties());
     }
 
 }

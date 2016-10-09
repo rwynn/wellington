@@ -15,7 +15,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
         classpath('com.eriwen:gradle-js-plugin:1.11.1')
         classpath("org.postgresql:postgresql:9.3-1101-jdbc41")
         classpath('org.ajoberstar:gradle-git:0.6.3')
@@ -60,27 +60,27 @@ repositories {
 
 dependencies {
 
-    compile('org.apache.tomcat:tomcat-jdbc:8.0.30')
+    compile('org.apache.tomcat:tomcat-jdbc:8.0.37')
     compile('net.sf.ehcache:ehcache-core:2.6.11')
-    compile("org.springframework:spring-core:4.2.4.RELEASE")
-    compile("org.springframework:spring-jms:4.2.4.RELEASE")
-    compile("org.springframework:spring-context-support:4.2.4.RELEASE")
-    compile("org.springframework:spring-orm:4.2.4.RELEASE")
-    compile("org.springframework:spring-web:4.2.4.RELEASE")
-    compile("org.springframework:spring-webmvc:4.2.4.RELEASE")
-    compile("org.springframework.boot:spring-boot-starter-web:1.3.2.RELEASE")
-    compile("org.springframework.boot:spring-boot-starter-actuator:1.3.2.RELEASE")
-    compile("org.springframework.data:spring-data-jpa:1.9.2.RELEASE")
-    compile("org.hibernate:hibernate-entitymanager:5.1.0.Final")
-    compile("org.hibernate:hibernate-core:5.1.0.Final")
-    compile("org.hibernate:hibernate-validator:5.1.0.Final")
+    compile("org.springframework:spring-core:4.3.3.RELEASE")
+    compile("org.springframework:spring-jms:4.3.3.RELEASE")
+    compile("org.springframework:spring-context-support:4.3.3.RELEASE")
+    compile("org.springframework:spring-orm:4.3.3.RELEASE")
+    compile("org.springframework:spring-web:4.3.3.RELEASE")
+    compile("org.springframework:spring-webmvc:4.3.3.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-web:1.4.1.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-actuator:1.4.1.RELEASE")
+    compile("org.springframework.data:spring-data-jpa:1.10.4.RELEASE")
+    compile("org.hibernate:hibernate-entitymanager:5.0.11.Final")
+    compile("org.hibernate:hibernate-core:5.0.11.Final")
+    compile("org.hibernate:hibernate-validator:5.1.3.Final")
     compile("org.aspectj:aspectjweaver:1.8.8")
     compile("org.mindrot:jbcrypt:0.3m")
-    compile("org.postgresql:postgresql:9.4.1207.jre7")
+    compile("org.postgresql:postgresql:9.4.1211.jre7")
     compile("org.yaml:snakeyaml:1.16")
     compile("org.apache.activemq:activemq-client:5.9.0")
-    compile("org.springframework.security:spring-security-web:4.0.3.RELEASE")
-    compile("org.springframework.security:spring-security-config:4.0.3.RELEASE")
+    compile("org.springframework.security:spring-security-web:4.1.3.RELEASE")
+    compile("org.springframework.security:spring-security-config:4.1.3.RELEASE")
 
     compile("com.ibm.icu:icu4j:3.4.4")
     compile('net.sf.dozer:dozer:5.4.0')  {
@@ -94,14 +94,14 @@ dependencies {
     jooq("org.jooq:jooq-codegen:3.6.4")
     jooq(files("config/jooq"))
 
-    compile("org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE")
-    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.3.2")
+    compile("org.thymeleaf:thymeleaf-spring4:2.1.5.RELEASE")
+    compile("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:1.3.3")
     compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE")
     compile 'edu.vt.middleware:vt-password:3.1.2'
 
-    compile 'org.webjars:jquery:2.2.0'
-    compile 'org.webjars:bootstrap:3.3.6'
-    compile 'org.webjars:angularjs:1.5.0'
+    compile 'org.webjars:jquery:3.1.1'
+    compile 'org.webjars:bootstrap:3.3.7'
+    compile 'org.webjars:angularjs:1.5.8'
 
     yuicompress("com.yahoo.platform.yui:yuicompressor:2.4.8")
 }

@@ -2,6 +2,8 @@
     padding-top: 75px;
 }
 
+ul { list-style: none }
+
 td.sort-column:hover {
   cursor:pointer;
 }

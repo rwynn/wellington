@@ -2,7 +2,6 @@ package org.github.rwynn.wellington.security;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${info.app.name}")
     String realm = "Realm";
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -84,21 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 logger.info("Secured endpoint at path " + endPoint.getId());
             }
         }
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence rawPassword) {
-                return BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt(12));
-            }
-
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
-            }
-        };
     }
 
     @Bean
